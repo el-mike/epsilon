@@ -84,6 +84,7 @@
   },
   "dependencies": {
     "electron-squirrel-startup": "^1.0.0",
-    "konva": "^8.3.12"
+    "konva": "^8.3.12",
+    "rxjs": "^7.5.6"
   }
 }

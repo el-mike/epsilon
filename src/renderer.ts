@@ -28,28 +28,14 @@
 
 import './index.css';
 
-import Konva from 'konva';
+import { Config } from './config';
 
-const stage = new Konva.Stage({
-  container: 'app',
-  width: 500,
-  height: 500
-});
+import { Game } from './Game';
 
-const layer = new Konva.Layer();
+const config = new Config({});
 
-const square = new Konva.Rect({
-  x: stage.width() / 2,
-  y: stage.height() / 2,
-  width: 100,
-  height: 100,
-  fill: 'brown',
-});
+const game = new Game(config);
 
-layer.add(square);
-
-stage.add(layer);
-
-layer.draw();
+game.start();
 
 console.log('👋 This message is being logged by "renderer.js", included via webpack');
