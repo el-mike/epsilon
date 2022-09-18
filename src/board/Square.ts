@@ -1,11 +1,12 @@
 import { SquareType } from './square-type';
 
 export class Square {
-  public type: SquareType;
+  public rank: number;
+  public file: number;
 
-  public constructor(type: SquareType) {
-    this.type = type;
-  }
+  public constructor(
+    public type: SquareType,
+  ) {}
 
   public isDark() {
     return this.type === SquareType.DARK;

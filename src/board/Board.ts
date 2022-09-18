@@ -7,15 +7,14 @@ import { SquareType } from './square-type';
 
 export type State = Square[][];
 
-const BOARD_SIZE = 8;
+export type IterateFn = (square: Square, rank: number, file: number) => void;
 
 let board: Board | null = null;
 
 export class Board {
-  private _config: Config;
-  private _state: State;
+  public static BOARD_SIZE = 8;
 
-  private _stage: Konva.Stage;
+  public state: State;
 
   public static getInstance(config: Config) {
     if (!board) {
@@ -23,54 +22,40 @@ export class Board {
     }
 
     return board;
+    
   }
-
-  private constructor(config: Config) {
-    this._config = config;
   
-    this._state = [
+
+  private constructor(private _config: Config) {
+    this.state = [
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
       []
     ];
 
-    this._stage = new Konva.Stage({
-      container: this._config.containerId,
-      width: this._config.boardWidth,
-      height: this._config.boardHeight,
+    this.iterate((_, rank, file) => {
+      const isDarkSquare = ((rank + file) % 2) !== 0;
+
+        const square = new Square(isDarkSquare ? SquareType.DARK : SquareType.LIGHT);
+
+        this.state[rank][file] = square;
     });
   }
 
-  public render() {
-    const squareWidth = this._config.boardWidth / BOARD_SIZE;
-    const squareHeight = this._config.boardHeight / BOARD_SIZE;
-  
-    const mainLayer = new Konva.Layer();
-
-    for (let rank = 0; rank < BOARD_SIZE; rank += 1) {
-      for (let file = 0; file < BOARD_SIZE; file += 1) {
-        const index = this._getIndex(rank, file);
-
-        const isDarkSquare = ((rank + file) % 2) !== 0;
-
-        const square = new Square(isDarkSquare ? SquareType.DARK : SquareType.LIGHT);
-        
-        const rect = new Konva.Rect({
-          x: (file * squareWidth),
-          y: (rank * squareHeight),
-          height: squareHeight,
-          width: squareWidth,
-          fill: square.isDark() ? this._config.darkSquareColor : this._config.lightSquareColor,
-        });
-
-        mainLayer.add(rect);
+  public iterate(callback: IterateFn) {
+    for (let rank = 0; rank < Board.BOARD_SIZE; rank += 1) {
+      for (let file = 0; file < Board.BOARD_SIZE; file += 1) {
+        callback(this.state[rank][file], rank, file);
       }
     }
-
-    this._stage.add(mainLayer);
-
-    mainLayer.draw();
   }
 
   private _getIndex(rank: number, file: number) {
-    return (rank * BOARD_SIZE) + file;
+    return (rank * Board.BOARD_SIZE) + file;
   }
 }

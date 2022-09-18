@@ -29,13 +29,16 @@
 import './index.css';
 
 import { Config } from './config';
+import { CanvasRenderer } from './game-renderer';
 
 import { Game } from './Game';
 
 const config = new Config({});
+const gameRenderer = new CanvasRenderer(config);
 
-const game = new Game(config);
+const game = new Game(config, gameRenderer);
 
 game.start();
 
 console.log('👋 This message is being logged by "renderer.js", included via webpack');
+
