@@ -31,12 +31,12 @@ export class CanvasRenderer implements GameRenderer {
         fill: square.isDark() ? this._config.darkSquareColor : this._config.lightSquareColor,
       });
 
-      
+
       mainLayer.add(rect);
     });
 
     this._stage.add(mainLayer);
 
-    mainLayer.draw();
+    this._stage.draw();
   }
 }

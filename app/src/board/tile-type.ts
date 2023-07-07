@@ -1,4 +1,4 @@
-export enum SquareType {
+export enum TileType {
   LIGHT = 'light',
   DARK = 'dark'
 }

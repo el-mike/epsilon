@@ -2,12 +2,12 @@ import Konva from 'konva';
 
 import { Config } from '../config';
 
-import { Square } from './Square';
-import { SquareType } from './square-type';
+import { Tile } from './Tile';
+import { TileType } from './tile-type';
 
-export type State = Square[][];
+export type State = Tile[][];
 
-export type IterateFn = (square: Square, rank: number, file: number) => void;
+export type IterateFn = (square: Tile, rank: number, file: number) => void;
 
 let board: Board | null = null;
 
@@ -41,7 +41,7 @@ export class Board {
     this.iterate((_, rank, file) => {
       const isDarkSquare = ((rank + file) % 2) !== 0;
 
-        const square = new Square(isDarkSquare ? SquareType.DARK : SquareType.LIGHT);
+        const square = new Tile(isDarkSquare ? TileType.DARK : TileType.LIGHT);
 
         this.state[rank][file] = square;
     });
