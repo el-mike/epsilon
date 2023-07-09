@@ -35,7 +35,7 @@ pub fn parse(fen: &str) -> Board {
 
         let piece = from_fen_symbol(c);
 
-        board.set_piece(&Coord::new(file, rank), &piece);
+        board.set_piece(&Coord::new(file as i8, rank as i8), piece);
 
         file += 1;
     }

@@ -17,7 +17,7 @@ impl fmt::Display for Board {
 
             file += 1;
 
-            if file == BOARD_WIDTH {
+            if file == BOARD_WIDTH as i8 {
                 result.push('\n');
 
                 file = 0;

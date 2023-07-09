@@ -1,5 +1,9 @@
+use crate::piece::piece::Piece;
 use crate::piece::piece_code;
 use crate::piece::piece_code::{PieceCode, BLACK_COLOR_OFFSET};
+use crate::piece::piece_color::PieceColor;
+
+pub type PieceValue = u8;
 
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum PieceKind {
@@ -32,8 +36,8 @@ impl PieceKind {
         }
     }
 
-    pub fn get_piece_code(&self) -> PieceCode {
-        match self {
+    pub fn get_code(&self, color: PieceColor) -> PieceCode {
+        let code = match self {
             Self::None => piece_code::NONE_CODE,
             Self::Pawn => piece_code::PAWN_CODE,
             Self::Knight => piece_code::KNIGHT_CODE,
@@ -41,6 +45,20 @@ impl PieceKind {
             Self::Rook => piece_code::ROOK_CODE,
             Self::Queen => piece_code::QUEEN_CODE,
             Self::King => piece_code::KING_CODE,
-        }
+        };
+
+        return code + color.get_color_offset();
+    }
+
+    pub fn value(&self) -> PieceValue {
+        return match self {
+            PieceKind::None => 0,
+            PieceKind::Pawn => 1,
+            PieceKind::Knight => 3,
+            PieceKind::Bishop => 3,
+            PieceKind::Rook => 5,
+            PieceKind::Queen => 9,
+            PieceKind::King => 20,
+        };
     }
 }

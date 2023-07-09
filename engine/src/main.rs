@@ -4,7 +4,9 @@ mod common;
 mod fen;
 mod piece;
 mod board;
+mod moves;
 mod render;
+mod position;
 
 use crate::fen::parser;
 use crate::board::board::Board;
