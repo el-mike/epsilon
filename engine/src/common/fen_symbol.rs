@@ -1,7 +1,6 @@
-pub struct FenPieceSymbol;
+pub struct FenSymbol;
 
-impl FenPieceSymbol {
-    pub const NONE: char = '_';
+impl FenSymbol {
     pub const PAWN: char = 'p';
     pub const KNIGHT: char = 'n';
     pub const BISHOP: char = 'b';

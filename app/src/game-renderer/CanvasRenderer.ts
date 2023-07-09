@@ -13,13 +13,16 @@ export class CanvasRenderer implements GameRenderer {
       container: this._config.containerId,
       width: this._config.boardWidth,
       height: this._config.boardHeight,
+
+
+
     });
   }
 
   public render(board: Board) {
     const squareWidth = this._config.boardWidth / Board.BOARD_SIZE;
     const squareHeight = this._config.boardHeight / Board.BOARD_SIZE;
-  
+
     const mainLayer = new Konva.Layer();
 
     board.iterate((square, rank, file) => {

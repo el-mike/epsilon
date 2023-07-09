@@ -1,6 +1,6 @@
-use crate::models::fen::FenPieceSymbol;
-use crate::models::player;
-use crate::models::player::Player;
+use std::fmt;
+use crate::common::fen_symbol::FenSymbol;
+use crate::board::player::Player;
 
 pub type PieceValue = u8;
 
@@ -35,20 +35,6 @@ impl Piece {
             PieceType::Rook => 5,
             PieceType::Queen => 9,
             PieceType::King => 20,
-        }
-    }
-
-    pub fn fen_symbol(&self) -> char {
-        let symbol = match self.piece_type {
-            PieceType::None => FenPieceSymbol::NONE,
-            PieceType::Pawn => FenPieceSymbol::PAWN,
-            PieceType::Knight => FenPieceSymbol::KNIGHT,
-            PieceType::Bishop => FenPieceSymbol::BISHOP,
-            PieceType::Rook => FenPieceSymbol::ROOK,
-            PieceType::Queen => FenPieceSymbol::QUEEN,
-            PieceType::King => FenPieceSymbol::KING,
         };
-
-        return if self.player == Player::White { symbol.to_ascii_uppercase() } else { symbol.to_ascii_lowercase() };
     }
 }
