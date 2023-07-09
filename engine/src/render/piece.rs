@@ -1,21 +1,22 @@
 use std::fmt;
 use crate::common::fen_symbol::FenSymbol;
-use crate::board::piece::{Piece, PieceType};
-use crate::board::player::Player;
+use crate::piece::piece::{Piece};
+use crate::piece::piece_color::PieceColor;
+use crate::piece::piece_kind::PieceKind;
 
 impl fmt::Display for Piece {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let base_symbol = match self.piece_type {
-            PieceType::None => '_',
-            PieceType::Pawn => FenSymbol::PAWN,
-            PieceType::Knight => FenSymbol::KNIGHT,
-            PieceType::Bishop => FenSymbol::BISHOP,
-            PieceType::Rook => FenSymbol::ROOK,
-            PieceType::Queen => FenSymbol::QUEEN,
-            PieceType::King => FenSymbol::KING,
+        let base_symbol = match self.kind {
+            PieceKind::None => '_',
+            PieceKind::Pawn => FenSymbol::PAWN,
+            PieceKind::Knight => FenSymbol::KNIGHT,
+            PieceKind::Bishop => FenSymbol::BISHOP,
+            PieceKind::Rook => FenSymbol::ROOK,
+            PieceKind::Queen => FenSymbol::QUEEN,
+            PieceKind::King => FenSymbol::KING,
         };
 
-        let symbol = if self.player == Player::White {
+        let symbol = if self.color == PieceColor::White {
             base_symbol.to_ascii_uppercase()
         } else {
             base_symbol.to_ascii_lowercase()

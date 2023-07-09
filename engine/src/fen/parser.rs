@@ -1,8 +1,10 @@
 use crate::common::coord::Coord;
 use crate::common::fen_symbol::FenSymbol;
 use crate::board::board::Board;
-use crate::board::piece::{Piece, PieceType};
-use crate::board::player::Player;
+use crate::piece::piece::Piece;
+use crate::piece::piece_kind::{PieceKind};
+use crate::piece::piece_code::PieceCode;
+use crate::piece::piece_color::PieceColor;
 
 const FEN_RANK_BREAK: char = '/';
 
@@ -33,7 +35,7 @@ pub fn parse(fen: &str) -> Board {
 
         let piece = from_fen_symbol(c);
 
-        board.set(&Coord::new(file, rank), piece);
+        board.set_piece(&Coord::new(file, rank), &piece);
 
         file += 1;
     }
@@ -42,21 +44,21 @@ pub fn parse(fen: &str) -> Board {
 }
 
 fn from_fen_symbol(symbol: char) -> Piece {
-    let piece_type = match symbol.to_ascii_lowercase() {
-        FenSymbol::PAWN => PieceType::Pawn,
-        FenSymbol::KNIGHT => PieceType::Knight,
-        FenSymbol::BISHOP => PieceType::Bishop,
-        FenSymbol::ROOK => PieceType::Rook,
-        FenSymbol::QUEEN => PieceType::Queen,
-        FenSymbol::KING => PieceType::King,
-        _ => PieceType::None,
+    let kind = match symbol.to_ascii_lowercase() {
+        FenSymbol::PAWN => PieceKind::Pawn,
+        FenSymbol::KNIGHT => PieceKind::Knight,
+        FenSymbol::BISHOP => PieceKind::Bishop,
+        FenSymbol::ROOK => PieceKind::Rook,
+        FenSymbol::QUEEN => PieceKind::Queen,
+        FenSymbol::KING => PieceKind::King,
+        _ => PieceKind::None,
     };
 
-    let player = if symbol.is_uppercase() {
-        Player::White
+    let color = if symbol.is_uppercase() {
+        PieceColor::White
     } else {
-        Player::Black
+        PieceColor::Black
     };
 
-    return Piece { piece_type, player };
+    return Piece::new(kind, color);
 }

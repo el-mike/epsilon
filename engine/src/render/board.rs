@@ -11,7 +11,7 @@ impl fmt::Display for Board {
         let mut rank = 7;
 
         loop {
-            let piece = self.get(&Coord::new(file, rank));
+            let piece = self.get_piece(&Coord::new(file, rank));
 
             result.push_str(format!(" {} ", piece).as_str());
 
