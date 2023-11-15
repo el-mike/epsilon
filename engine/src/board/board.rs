@@ -1,7 +1,6 @@
 use crate::common::coord::Coord;
 use crate::moves::piece_move::PieceMove;
 use crate::piece::piece::Piece;
-use crate::piece::piece_code::PieceCode;
 use crate::piece::piece_color::PieceColor;
 use crate::piece::piece_kind::PieceKind;
 
@@ -10,8 +9,8 @@ pub enum SquareColor {
     Black,
 }
 
-pub const BOARD_WIDTH: u8 = 8;
-const BOARD_SIZE: u8 = 64;
+pub const BOARD_WIDTH: usize = 8;
+const BOARD_SIZE: usize = 64;
 
 fn out_of_bounds_index_message(coord: &Coord) -> String {
     return format!("Out of bounds coord: x = {}, y = {}", coord.x, coord.y);
@@ -24,14 +23,14 @@ fn illegal_move_message() -> String {
 /// Representation of the chess board.
 #[derive(Copy, Clone, Debug)]
 pub struct Board {
-    state: [Piece; BOARD_SIZE as usize],
+    state: [Piece; BOARD_SIZE],
 }
 
 impl Board {
     /// Returns new Board instance, filled with "empty" Pieces.
     pub fn new() -> Self {
         return Board {
-            state: [Piece::new_empty(); BOARD_SIZE as usize],
+            state: [Piece::new_empty(); BOARD_SIZE],
         };
     }
 
@@ -100,7 +99,6 @@ impl Board {
     /// If the moves contain taken piece, it will be restored to its original
     /// square.
     pub fn unmake_move(&mut self, piece_move: &PieceMove) {
-        let source = self.get_piece(&piece_move.source);
         let target = self.get_piece(&piece_move.target);
 
         self.set_piece(&piece_move.source, *target);

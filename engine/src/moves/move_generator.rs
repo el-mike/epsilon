@@ -25,6 +25,7 @@ impl<'a> MoveGenerator<'a> {
         return moves;
     }
 
+    // Use "pub use" to make imports better (barrel files?)
     fn generate_pawn_moves(&self, coord: &Coord, piece: &Piece) -> Vec<PieceMove> {
         let pseudo_legal_moves = self.generate_sliding_moves(coord, &Coord::NORTH);
 

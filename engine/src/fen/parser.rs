@@ -3,7 +3,6 @@ use crate::common::fen_symbol::FenSymbol;
 use crate::board::board::Board;
 use crate::piece::piece::Piece;
 use crate::piece::piece_kind::{PieceKind};
-use crate::piece::piece_code::PieceCode;
 use crate::piece::piece_color::PieceColor;
 
 const FEN_RANK_BREAK: char = '/';
