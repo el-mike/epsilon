@@ -1,3 +1,4 @@
+use std::task::Poll::Pending;
 use crate::common::coord::Coord;
 use crate::moves::piece_move::PieceMove;
 use crate::piece::piece::Piece;
@@ -24,6 +25,7 @@ fn illegal_move_message() -> String {
 #[derive(Copy, Clone, Debug)]
 pub struct Board {
     state: [Piece; BOARD_SIZE],
+    player_to_move: PieceColor
 }
 
 impl Board {
@@ -31,7 +33,13 @@ impl Board {
     pub fn new() -> Self {
         return Board {
             state: [Piece::new_empty(); BOARD_SIZE],
+            player_to_move: PieceColor::White
         };
+    }
+
+    /// Allows to set player_to_move.
+    pub fn set_player_to_move(&mut self, player_to_move: PieceColor) {
+        self.player_to_move = player_to_move;
     }
 
     /// Returns a piece under passed coordinates.

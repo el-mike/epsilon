@@ -9,7 +9,6 @@ mod render;
 mod position;
 
 use crate::fen::parser;
-use crate::board::board::Board;
 use crate::common::coord::Coord;
 use crate::moves::piece_move::PieceMove;
 

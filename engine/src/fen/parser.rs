@@ -10,13 +10,25 @@ const FEN_RANK_BREAK: char = '/';
 pub fn parse(fen: &str) -> Board {
     let mut board = Board::new();
 
+    let fragments: Vec<&str> = fen.split_whitespace().collect();
+
+    parse_piece_placement(fragments[0], &mut board);
+
+    if !fragments.get(1).is_none() {
+        parse_player_to_move(fragments[1], &mut board);
+    }
+
+    return board;
+}
+
+fn parse_piece_placement(fragment: &str, board: &mut Board) {
     let mut file: u8 = 0;
 
     // FEN notation starts with the top rank from the White's perspective, which is the
     // seventh rank.
     let mut rank: u8 = 7;
 
-    for c in fen.chars() {
+    for c in fragment.chars() {
         if c == FEN_RANK_BREAK {
             file = 0;
             rank -= 1;
@@ -32,17 +44,25 @@ pub fn parse(fen: &str) -> Board {
             continue;
         }
 
-        let piece = from_fen_symbol(c);
+        let piece = get_piece_from_fen_symbol(c);
 
         board.set_piece(&Coord::new(file as i8, rank as i8), piece);
 
         file += 1;
     }
-
-    return board;
 }
 
-fn from_fen_symbol(symbol: char) -> Piece {
+fn parse_player_to_move(fragment: &str, board: &mut Board) {
+    let chars: Vec<char> = fragment.chars().collect();
+
+    if chars[0] == FenSymbol::BLACK_TO_MOVE {
+        board.set_player_to_move(PieceColor::Black);
+    } else {
+        board.set_player_to_move(PieceColor::White);
+    }
+}
+
+fn get_piece_from_fen_symbol(symbol: char) -> Piece {
     let kind = match symbol.to_ascii_lowercase() {
         FenSymbol::PAWN => PieceKind::Pawn,
         FenSymbol::KNIGHT => PieceKind::Knight,
