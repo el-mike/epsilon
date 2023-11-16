@@ -35,7 +35,8 @@ impl AlgebraicCoord {
             panic!("Malformed algebraic coord: {}", self.value);
         }
 
-        let file = (chars[0] as u32) - ASCII_A_CODE as u32;
+        /// We need to add "1" to the file, as subtracting ASCII "a" code is zero-based.
+        let file = ((chars[0] as u32) - ASCII_A_CODE as u32) + 1;
         let rank = chars[1].to_digit(10).unwrap();
 
         return Coord {

@@ -25,9 +25,12 @@ fn illegal_move_message() -> String {
 #[derive(Copy, Clone, Debug)]
 pub struct Board {
     state: [Piece; BOARD_SIZE],
-    player_to_move: PieceColor,
-    white_castling_rights: CastlingRights,
-    black_castling_rights: CastlingRights
+    pub player_to_move: PieceColor,
+    pub white_castling_rights: CastlingRights,
+    pub black_castling_rights: CastlingRights,
+    pub en_passant_coord: Option<Coord>,
+    pub half_move_clock: u8,
+    pub full_move_clock: u8
 }
 
 impl Board {
@@ -37,22 +40,11 @@ impl Board {
             state: [Piece::new_empty(); BOARD_SIZE],
             player_to_move: PieceColor::White,
             white_castling_rights: CastlingRights::new(),
-            black_castling_rights: CastlingRights::new()
+            black_castling_rights: CastlingRights::new(),
+            en_passant_coord: None,
+            half_move_clock: 0,
+            full_move_clock: 0
         };
-    }
-
-    /// Allows to set player_to_move.
-    pub fn set_player_to_move(&mut self, player_to_move: PieceColor) {
-        self.player_to_move = player_to_move;
-    }
-
-    /// Allows to set castling rights for both players.
-    pub fn set_castling_rights(&mut self, player: PieceColor, rights: CastlingRights) {
-        if player == PieceColor::White {
-            self.white_castling_rights = rights
-        } else {
-            self.black_castling_rights = rights
-        }
     }
 
     /// Returns a piece under passed coordinates.

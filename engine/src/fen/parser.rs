@@ -1,10 +1,11 @@
-use crate::common::coord::Coord;
-use crate::common::fen_symbol::FenSymbol;
 use crate::board::board::Board;
 use crate::board::castling_rights::CastlingRights;
+use crate::common::algebraic_coord::AlgebraicCoord;
+use crate::common::coord::Coord;
+use crate::common::fen_symbol::FenSymbol;
 use crate::piece::piece::Piece;
-use crate::piece::piece_kind::{PieceKind};
 use crate::piece::piece_color::PieceColor;
+use crate::piece::piece_kind::PieceKind;
 
 const FEN_RANK_BREAK: char = '/';
 
@@ -21,6 +22,18 @@ pub fn parse(fen: &str) -> Board {
 
     if segments.get(2).is_some() {
         parse_castling_rights(segments[2], &mut board);
+    }
+
+    if segments.get(3).is_some() {
+        parse_en_passant(segments[3], &mut board);
+    }
+
+    if segments.get(4).is_some() {
+        parse_half_move_clock(segments[4], &mut board);
+    }
+
+    if segments.get(5).is_some() {
+        parse_full_move_clock(segments[5], &mut board);
     }
 
     return board;
@@ -61,16 +74,16 @@ fn parse_player_to_move(segment: &str, board: &mut Board) {
     let chars: Vec<char> = segment.chars().collect();
 
     if chars[0] == FenSymbol::BLACK_TO_MOVE {
-        board.set_player_to_move(PieceColor::Black);
+        board.player_to_move = PieceColor::Black;
     } else {
-        board.set_player_to_move(PieceColor::White);
+        board.player_to_move = PieceColor::White;
     }
 }
 
 fn parse_castling_rights(segment: &str, board: &mut Board) {
     let chars: Vec<char> = segment.chars().collect();
 
-    if chars.len() == 1 && chars[0] == FenSymbol::EMPTY_SEGMENT {
+    if chars[0] == FenSymbol::EMPTY_SEGMENT {
         return;
     }
 
@@ -83,8 +96,38 @@ fn parse_castling_rights(segment: &str, board: &mut Board) {
     black_castling_rights.king_side = chars.contains(&FenSymbol::KING_SIDE_CASTLE_BLACK);
     black_castling_rights.queen_side = chars.contains(&FenSymbol::QUEEN_SIDE_CASTLE_BLACK);
 
-    board.set_castling_rights(PieceColor::White, white_castling_rights);
-    board.set_castling_rights(PieceColor::Black, black_castling_rights);
+    board.white_castling_rights = white_castling_rights;
+    board.black_castling_rights = black_castling_rights;
+}
+
+fn parse_en_passant(segment: &str, board: &mut Board) {
+    if segment.chars().nth(0).expect("Incorrect algebraic coord") == FenSymbol::EMPTY_SEGMENT {
+        return;
+    }
+
+    let coord = AlgebraicCoord::from_string(segment);
+
+    board.en_passant_coord = Some(coord.to_coord())
+}
+
+fn parse_half_move_clock(segment: &str, board: &mut Board) {
+    if segment.chars().nth(0).expect("Incorrect half move clock") == FenSymbol::EMPTY_SEGMENT {
+        return;
+    }
+
+    if let Ok(clock) = segment.parse::<u8>() {
+        board.half_move_clock = clock
+    }
+}
+
+fn parse_full_move_clock(segment: &str, board: &mut Board) {
+    if segment.chars().nth(0).expect("Incorrect full move clock") == FenSymbol::EMPTY_SEGMENT {
+        return;
+    }
+
+    if let Ok(clock) = segment.parse::<u8>() {
+        board.full_move_clock = clock
+    }
 }
 
 fn get_piece_from_fen_symbol(symbol: char) -> Piece {

@@ -6,7 +6,6 @@ use crate::piece::piece_kind::PieceKind;
 pub struct Piece {
     pub kind: PieceKind,
     pub color: PieceColor,
-    pub has_moved: bool,
 }
 
 impl Piece {
@@ -14,7 +13,6 @@ impl Piece {
         return Self {
             kind,
             color,
-            has_moved: false,
         };
     }
 
@@ -22,7 +20,6 @@ impl Piece {
         return Self {
             kind: PieceKind::None,
             color: PieceColor::None,
-            has_moved: false,
         };
     }
 
@@ -50,7 +47,6 @@ impl Piece {
         return Self {
             color,
             kind,
-            has_moved: false,
         };
     }
 }
