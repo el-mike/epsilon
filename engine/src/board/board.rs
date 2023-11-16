@@ -1,4 +1,4 @@
-use std::task::Poll::Pending;
+use crate::board::castling_rights::CastlingRights;
 use crate::common::coord::Coord;
 use crate::moves::piece_move::PieceMove;
 use crate::piece::piece::Piece;
@@ -25,7 +25,9 @@ fn illegal_move_message() -> String {
 #[derive(Copy, Clone, Debug)]
 pub struct Board {
     state: [Piece; BOARD_SIZE],
-    player_to_move: PieceColor
+    player_to_move: PieceColor,
+    white_castling_rights: CastlingRights,
+    black_castling_rights: CastlingRights
 }
 
 impl Board {
@@ -33,13 +35,24 @@ impl Board {
     pub fn new() -> Self {
         return Board {
             state: [Piece::new_empty(); BOARD_SIZE],
-            player_to_move: PieceColor::White
+            player_to_move: PieceColor::White,
+            white_castling_rights: CastlingRights::new(),
+            black_castling_rights: CastlingRights::new()
         };
     }
 
     /// Allows to set player_to_move.
     pub fn set_player_to_move(&mut self, player_to_move: PieceColor) {
         self.player_to_move = player_to_move;
+    }
+
+    /// Allows to set castling rights for both players.
+    pub fn set_castling_rights(&mut self, player: PieceColor, rights: CastlingRights) {
+        if player == PieceColor::White {
+            self.white_castling_rights = rights
+        } else {
+            self.black_castling_rights = rights
+        }
     }
 
     /// Returns a piece under passed coordinates.

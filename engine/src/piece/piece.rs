@@ -34,7 +34,7 @@ impl Piece {
         return self.color != other_piece.color;
     }
 
-    pub fn code(&self) -> PieceCode {
+    pub fn get_code(&self) -> PieceCode {
         return self.kind.get_code(self.color);
     }
 
