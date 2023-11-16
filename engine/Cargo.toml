@@ -6,3 +6,9 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+
+[lib]
+name="engine_lib"
+path="src/lib.rs"
+# Needs to have "rlib" too, otherwise it throws an error.
+crate-type=["rlib", "dylib"]
