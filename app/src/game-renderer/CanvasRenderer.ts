@@ -13,9 +13,6 @@ export class CanvasRenderer implements GameRenderer {
       container: this._config.containerId,
       width: this._config.boardWidth,
       height: this._config.boardHeight,
-
-
-
     });
   }
 

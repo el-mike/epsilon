@@ -13,7 +13,7 @@ mod moves;
 mod render;
 mod position;
 
-pub fn run() {
+pub extern "C" fn run() {
     let mut board = parser::parse(common::constants::FEN_STARTING_POSITION);
 
     println!("{}", board);
