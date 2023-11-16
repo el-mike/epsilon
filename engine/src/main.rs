@@ -10,6 +10,7 @@ mod position;
 
 use crate::fen::parser;
 use crate::common::coord::Coord;
+use crate::moves::mover::Mover;
 use crate::moves::piece_move::PieceMove;
 
 fn main() {
@@ -22,7 +23,7 @@ fn main() {
 
     let mut piece_move = PieceMove::new(source, target, false);
 
-    board.make_move(&mut piece_move);
+    Mover::make_move(&mut board, &mut piece_move);
 
     println!("{}", board);
 }

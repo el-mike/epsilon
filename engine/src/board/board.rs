@@ -1,6 +1,6 @@
 use crate::board::castling_rights::CastlingRights;
+use crate::board::error_messages::out_of_bounds_index_message;
 use crate::common::coord::Coord;
-use crate::moves::piece_move::PieceMove;
 use crate::piece::piece::Piece;
 use crate::piece::piece_color::PieceColor;
 use crate::piece::piece_kind::PieceKind;
@@ -12,14 +12,6 @@ pub enum SquareColor {
 
 pub const BOARD_WIDTH: usize = 8;
 const BOARD_SIZE: usize = 64;
-
-fn out_of_bounds_index_message(coord: &Coord) -> String {
-    return format!("Out of bounds coord: x = {}, y = {}", coord.x, coord.y);
-}
-
-fn illegal_move_message() -> String {
-    return format!("Illegal move detected!");
-}
 
 /// Representation of the chess board.
 #[derive(Copy, Clone, Debug)]
@@ -87,40 +79,6 @@ impl Board {
         } else {
             SquareColor::White
         };
-    }
-
-    /// Makes given move and changes the state of the board.
-    /// If the moves result in a piece being taken, piece_move struct is updated
-    /// with the correct information.
-    pub fn make_move(&mut self, piece_move: &mut PieceMove) {
-        let source = self.get_piece(&piece_move.source);
-        let target = self.get_piece(&piece_move.target);
-
-        if source.color == target.color {
-            panic!("{}", illegal_move_message());
-        }
-
-        if target.kind != PieceKind::None {
-            piece_move.taken_piece = Some(*target);
-        }
-
-        self.set_piece(&piece_move.target, *source);
-        self.set_piece(&piece_move.source, Piece::new_empty());
-    }
-
-    /// Unmakes given move and changes the state of the board.
-    /// If the moves contain taken piece, it will be restored to its original
-    /// square.
-    pub fn unmake_move(&mut self, piece_move: &PieceMove) {
-        let target = self.get_piece(&piece_move.target);
-
-        self.set_piece(&piece_move.source, *target);
-
-        if let Some(taken_piece) = piece_move.taken_piece {
-            self.set_piece(&piece_move.target, taken_piece);
-        } else {
-            self.set_piece(&piece_move.target, Piece::new_empty());
-        }
     }
 
     /// Returns an index for given coordinates.

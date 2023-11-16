@@ -4,17 +4,15 @@ use crate::piece::piece::Piece;
 use crate::moves::piece_move::PieceMove;
 use crate::piece::piece_kind::PieceKind;
 
-pub struct MoveGenerator<'a> {
-    pub board: &'a Board,
-}
+pub struct MoveGenerator {}
 
-impl<'a> MoveGenerator<'a> {
-    pub fn generate_moves(&self, coord: &Coord) -> Vec<PieceMove> {
-        let source_piece = self.board.get_piece(coord);
+impl MoveGenerator {
+    pub fn generate_moves(&self, board: &Board, coord: &Coord) -> Vec<PieceMove> {
+        let source_piece = board.get_piece(coord);
 
         let moves: Vec<PieceMove> = match source_piece.kind {
             PieceKind::None => Vec::new(),
-            PieceKind::Pawn => self.generate_pawn_moves(coord, source_piece),
+            PieceKind::Pawn => self.generate_pawn_moves(board, coord, source_piece),
             PieceKind::Knight => self.generate_knight_moves(coord, source_piece),
             PieceKind::Bishop => self.generate_bishop_moves(coord, source_piece),
             PieceKind::Rook => self.generate_rook_moves(coord, source_piece),
@@ -25,9 +23,8 @@ impl<'a> MoveGenerator<'a> {
         return moves;
     }
 
-    // Use "pub use" to make imports better (barrel files?)
-    fn generate_pawn_moves(&self, coord: &Coord, piece: &Piece) -> Vec<PieceMove> {
-        let pseudo_legal_moves = self.generate_sliding_moves(coord, &Coord::NORTH);
+    fn generate_pawn_moves(&self, board: &Board, coord: &Coord, piece: &Piece) -> Vec<PieceMove> {
+        let pseudo_legal_moves = self.generate_sliding_moves(board, coord, &Coord::NORTH);
 
         return pseudo_legal_moves;
     }
@@ -52,8 +49,8 @@ impl<'a> MoveGenerator<'a> {
         return Vec::new();
     }
 
-    fn generate_sliding_moves(&self, coord: &Coord, direction: &Coord) -> Vec<PieceMove> {
-        let source_piece = self.board.get_piece(coord);
+    fn generate_sliding_moves(&self, board: &Board, coord: &Coord, direction: &Coord) -> Vec<PieceMove> {
+        let source_piece = board.get_piece(coord);
 
         let mut moves: Vec<PieceMove> = Vec::new();
 
@@ -62,7 +59,7 @@ impl<'a> MoveGenerator<'a> {
         loop {
             let next_coord = coord.apply_direction(direction, i);
 
-            let target_piece = self.board.get_piece(&next_coord);
+            let target_piece = board.get_piece(&next_coord);
 
             if target_piece.color == source_piece.color {
                 break;
