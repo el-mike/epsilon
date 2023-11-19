@@ -28,11 +28,9 @@
 
 import './index.css';
 
-import { Config } from './config';
 import { Game } from './game';
 
-const config = new Config({});
-const game = new Game(config);
+const game = new Game();
 
 game.start();
 
