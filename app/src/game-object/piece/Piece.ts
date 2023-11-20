@@ -1,27 +1,27 @@
-import { PieceColor } from '../../common';
-import { GameObject } from '../GameObject';
-import { StageManager } from '../../stage';
+import { PieceColor } from "../../common";
+import { GameObject } from "../GameObject";
+import { StageManager } from "../../stage";
 
 export abstract class Piece extends GameObject {
-  protected color: PieceColor;
+  public constructor(
+    protected _color: PieceColor,
+    protected _x: number,
+    protected _y: number,
+  ) {
+    super();
+  }
 
   public isWhite() {
-    return this.color === PieceColor.White;
+    return this._color === PieceColor.White;
   }
 
   public isBlack() {
-    return this.color === PieceColor.Black;
+    return this._color === PieceColor.Black;
   }
 
-  public destroy() {
+  public destroy() {}
 
-  }
+  public init() {}
 
-  public init() {
-
-  }
-
-  public render(stageManager: StageManager) {
-
-  }
+  public render(stageManager: StageManager) {}
 }

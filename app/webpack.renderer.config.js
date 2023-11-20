@@ -7,6 +7,11 @@ rules.push({
   use: [{ loader: 'style-loader' }, { loader: 'css-loader' }],
 });
 
+rules.push({
+  test: /\.png$/,
+  use: 'file-loader'
+});
+
 module.exports = {
   module: {
     rules,
