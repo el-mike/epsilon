@@ -7,7 +7,6 @@ use crate::piece::piece_kind::PieceKind;
 impl fmt::Display for Piece {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let base_symbol = match self.kind {
-            PieceKind::None => '_',
             PieceKind::Pawn => FenSymbol::PAWN,
             PieceKind::Knight => FenSymbol::KNIGHT,
             PieceKind::Bishop => FenSymbol::BISHOP,

@@ -7,7 +7,6 @@ pub type PieceValue = u8;
 
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum PieceKind {
-    None,
     Pawn,
     Knight,
     Bishop,
@@ -25,7 +24,6 @@ impl PieceKind {
         };
 
         match code {
-            piece_code::NONE_CODE => Self::None,
             piece_code::PAWN_CODE => Self::Pawn,
             piece_code::KNIGHT_CODE => Self::Knight,
             piece_code::BISHOP_CODE => Self::Bishop,
@@ -38,7 +36,6 @@ impl PieceKind {
 
     pub fn get_code(&self, color: PieceColor) -> PieceCode {
         let code = match self {
-            Self::None => piece_code::NONE_CODE,
             Self::Pawn => piece_code::PAWN_CODE,
             Self::Knight => piece_code::KNIGHT_CODE,
             Self::Bishop => piece_code::BISHOP_CODE,
@@ -52,7 +49,6 @@ impl PieceKind {
 
     pub fn value(&self) -> PieceValue {
         return match self {
-            PieceKind::None => 0,
             PieceKind::Pawn => 1,
             PieceKind::Knight => 3,
             PieceKind::Bishop => 3,

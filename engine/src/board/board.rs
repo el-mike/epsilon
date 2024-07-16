@@ -1,3 +1,4 @@
+use crate::board::board_state::BoardState;
 use crate::board::castling_rights::CastlingRights;
 use crate::board::error_messages::out_of_bounds_index_message;
 use crate::common::coord::Coord;
@@ -16,7 +17,7 @@ const BOARD_SIZE: usize = 64;
 /// Representation of the chess board.
 #[derive(Copy, Clone, Debug)]
 pub struct Board {
-    state: [Piece; BOARD_SIZE],
+    pub state: BoardState,
     pub player_to_move: PieceColor,
     pub white_castling_rights: CastlingRights,
     pub black_castling_rights: CastlingRights,
@@ -29,7 +30,7 @@ impl Board {
     /// Returns new Board instance, filled with "empty" Pieces.
     pub fn new() -> Self {
         return Board {
-            state: [Piece::new_empty(); BOARD_SIZE],
+            state: BoardState::new(),
             player_to_move: PieceColor::White,
             white_castling_rights: CastlingRights::new(),
             black_castling_rights: CastlingRights::new(),
@@ -39,19 +40,18 @@ impl Board {
         };
     }
 
-    /// Returns a piece under passed coordinates.
+    /// Returns a piece under given coordinates.
     pub fn get_piece(&self, coord: &Coord) -> &Piece {
+        return self.state.get_bitboard()
         return self
             .state
             .get(self.get_index(coord))
             .expect(out_of_bounds_index_message(coord).as_str());
     }
 
-    /// Sets a piece under passed coordinates.
+    /// Sets a piece under given coordinates.
     pub fn set_piece(&mut self, coord: &Coord, piece: Piece) {
-        let index = self.get_index(coord);
-
-        self.state[index] = piece;
+        self.state.set_bitboard(coord, piece);
     }
 
     pub fn get_all_by_color(&self, color: PieceColor) -> Vec<Piece> {

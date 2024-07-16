@@ -138,7 +138,7 @@ fn get_piece_from_fen_symbol(symbol: char) -> Piece {
         FenSymbol::ROOK => PieceKind::Rook,
         FenSymbol::QUEEN => PieceKind::Queen,
         FenSymbol::KING => PieceKind::King,
-        _ => PieceKind::None,
+        _ => panic!("Incorrect FEN symbol: {symbol}")
     };
 
     let color = if symbol.is_uppercase() {

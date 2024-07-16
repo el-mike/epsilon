@@ -58,7 +58,6 @@ impl MoveGenerator {
 
         loop {
             let next_coord = coord.apply_direction(direction, i);
-
             let target_piece = board.get_piece(&next_coord);
 
             if target_piece.color == source_piece.color {
