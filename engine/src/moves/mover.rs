@@ -18,9 +18,9 @@ impl Mover {
             panic!("{}", illegal_move_message());
         }
 
-        if target.kind != PieceKind::None {
-            piece_move.taken_piece = Some(*target);
-        }
+        // if target.kind != PieceKind::None {
+        //     piece_move.taken_piece = Some(*target);
+        // }
 
         board.set_piece(&piece_move.target, *source);
         board.set_piece(&piece_move.source, Piece::new_empty());

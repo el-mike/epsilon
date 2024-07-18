@@ -42,11 +42,15 @@ impl Board {
 
     /// Returns a piece under given coordinates.
     pub fn get_piece(&self, coord: &Coord) -> &Piece {
-        return self.state.get_bitboard()
-        return self
-            .state
-            .get(self.get_index(coord))
-            .expect(out_of_bounds_index_message(coord).as_str());
+        return &Piece{
+            kind: PieceKind::King,
+            color: PieceColor::White
+        };
+        // return self.state.get_bitboard()
+        // return self
+        //     .state
+        //     .get(self.get_index(coord))
+        //     .expect(out_of_bounds_index_message(coord).as_str());
     }
 
     /// Sets a piece under given coordinates.
@@ -55,21 +59,17 @@ impl Board {
     }
 
     pub fn get_all_by_color(&self, color: PieceColor) -> Vec<Piece> {
-        return self
-            .state
-            .into_iter()
-            .filter(|piece| return piece.kind != PieceKind::None && piece.color == color)
-            .collect();
+        return vec![];
+        // return self
+        //     .state
+        //     .into_iter()
+        //     .filter(|piece| return piece.kind != PieceKind::None && piece.color == color)
+        //     .collect();
     }
 
     /// Returns true if given coordinates are inside the board, false otherwise.
     pub fn is_inside(&self, coord: &Coord) -> bool {
         return coord.x < BOARD_WIDTH as i8 && coord.y < BOARD_WIDTH as i8;
-    }
-
-    /// Returns true if given coordinates contain an actual piece, false otherwise.
-    pub fn has_piece(&self, coord: &Coord) -> bool {
-        return self.get_piece(coord).kind != PieceKind::None;
     }
 
     /// Returns the color of a square under given coordinates.

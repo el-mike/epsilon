@@ -1,4 +1,4 @@
-use std::fmt;
+ use std::fmt;
 
 use crate::common::coord::Coord;
 use crate::board::board::{Board, BOARD_WIDTH};
@@ -30,6 +30,6 @@ impl fmt::Display for Board {
             }
         }
 
-        write!(f, "{}", result)
+        return write!(f, "{}", result);
     }
 }

@@ -7,7 +7,7 @@ pub type PieceValue = u8;
 
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum PieceKind {
-    Pawn,
+    Pawn = 0,
     Knight,
     Bishop,
     Rook,

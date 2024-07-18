@@ -11,7 +11,6 @@ impl MoveGenerator {
         let source_piece = board.get_piece(coord);
 
         let moves: Vec<PieceMove> = match source_piece.kind {
-            PieceKind::None => Vec::new(),
             PieceKind::Pawn => self.generate_pawn_moves(board, coord, source_piece),
             PieceKind::Knight => self.generate_knight_moves(coord, source_piece),
             PieceKind::Bishop => self.generate_bishop_moves(coord, source_piece),
@@ -64,10 +63,10 @@ impl MoveGenerator {
                 break;
             }
 
-            let takes = !target_piece.is_none();
+            // let takes = !target_piece.is_none();
 
-            let piece_move = PieceMove::new(coord.clone(), next_coord, takes);
-            moves.push(piece_move);
+            // let piece_move = PieceMove::new(coord.clone(), next_coord, takes);
+            // moves.push(piece_move);
 
             i += 1;
         }
