@@ -1,5 +1,5 @@
 use crate::board::board::Board;
-use crate::piece::piece_color::PieceColor;
+use crate::board::piece::{PieceColor};
 
 pub struct Analyzer<'a> {
     board: &'a Board,

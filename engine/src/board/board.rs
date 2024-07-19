@@ -1,9 +1,7 @@
 use crate::board::bitboard::Bitboard;
 use crate::common::coord::Coord;
 
-use crate::piece::piece::Piece;
-use crate::piece::piece_color::{PieceColor, PIECE_COLORS};
-use crate::piece::piece_kind::{PieceKind, PIECE_KINDS};
+use crate::board::piece::{Piece, PieceColor, PieceKind, PIECE_COLORS, PIECE_KINDS};
 
 use crate::board::castling_rights::CastlingRights;
 use crate::board::bitboards::{Bitboards, get_empty_bitboards};

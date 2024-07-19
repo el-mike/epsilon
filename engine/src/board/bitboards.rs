@@ -1,7 +1,6 @@
 use std::ops::{Index, IndexMut};
 use crate::board::bitboard::Bitboard;
-use crate::piece::piece_color::PieceColor;
-use crate::piece::piece_kind::PieceKind;
+use crate::board::piece::{PieceColor, PieceKind};
 
 pub type ColorBitboards = [Bitboard; 6];
 pub type Bitboards = [ColorBitboards; 2];

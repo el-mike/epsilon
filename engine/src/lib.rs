@@ -5,7 +5,6 @@ use crate::moves::piece_move::PieceMove;
 
 mod common;
 mod fen;
-mod piece;
 mod board;
 mod moves;
 mod render;

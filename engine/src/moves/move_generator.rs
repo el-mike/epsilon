@@ -1,8 +1,7 @@
 use crate::board::board::Board;
 use crate::common::coord::Coord;
-use crate::piece::piece::Piece;
+use crate::board::piece::{Piece, PieceKind};
 use crate::moves::piece_move::PieceMove;
-use crate::piece::piece_kind::PieceKind;
 
 pub struct MoveGenerator {}
 

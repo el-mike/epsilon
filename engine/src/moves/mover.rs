@@ -1,8 +1,6 @@
 use crate::board::board::Board;
 use crate::moves::error_messages::illegal_move_message;
 use crate::moves::piece_move::PieceMove;
-use crate::piece::piece::Piece;
-use crate::piece::piece_kind::PieceKind;
 
 pub struct Mover {}
 

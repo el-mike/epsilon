@@ -1,7 +1,5 @@
 use crate::common::fen_symbol::FenSymbol;
-use crate::piece::piece::{Piece};
-use crate::piece::piece_color::PieceColor;
-use crate::piece::piece_kind::PieceKind;
+use crate::board::piece::{Piece, PieceColor, PieceKind};
 
 pub fn get_symbol_for_piece(piece: &Piece) -> char {
     let base_symbol = match piece.kind {

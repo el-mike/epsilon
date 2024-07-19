@@ -3,9 +3,7 @@ use crate::board::castling_rights::CastlingRights;
 use crate::common::algebraic_coord::AlgebraicCoord;
 use crate::common::coord::Coord;
 use crate::common::fen_symbol::FenSymbol;
-use crate::piece::piece::Piece;
-use crate::piece::piece_color::PieceColor;
-use crate::piece::piece_kind::PieceKind;
+use crate::board::piece::{Piece, PieceColor, PieceKind};
 
 const FEN_RANK_BREAK: char = '/';
 

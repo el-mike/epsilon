@@ -1,5 +1,5 @@
 use crate::common::coord::Coord;
-use crate::piece::piece::Piece;
+use crate::board::piece::Piece;
 
 pub struct PieceMove {
     pub source: Coord,
