@@ -22,7 +22,7 @@ fn get_bit_index_from_coord(coord: &Coord) -> u8 {
 /// Representation of the chess board.
 #[derive(Copy, Clone, Debug)]
 pub struct Board {
-    pub state: Bitboards,
+    state: Bitboards,
     pub player_to_move: PieceColor,
     pub white_castling_rights: CastlingRights,
     pub black_castling_rights: CastlingRights,
@@ -46,17 +46,13 @@ impl Board {
     }
 
     /// Returns Bitboard for given piece.
-    fn get_bitboard(&self, piece: Piece) -> Bitboard {
-        return self.state[piece.color][piece.kind];
+    fn get_bitboard(&self, piece: Piece) -> &Bitboard {
+        return &self.state[piece.color][piece.kind];
     }
 
     /// Sets Bitboard's bit at given position.
     fn set_bitboard(&mut self, coord: &Coord, piece: Piece) {
-        let mut bitboard = self.get_bitboard(piece);
-        bitboard.set_at(get_bit_index_from_coord(coord));
-
-        self.state[piece.color][piece.kind] = bitboard;
-        self.get_bitboard(piece).set_at(get_bit_index_from_coord(coord));
+        self.state[piece.color][piece.kind].set_at(get_bit_index_from_coord(coord));
     }
 
     /// Returns true if given Piece's Bitboard is set under given coord, false otherwise.

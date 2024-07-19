@@ -1,4 +1,4 @@
-use std::ops::{BitAnd, BitOr, BitXor, BitAndAssign, BitOrAssign, BitXorAssign};
+use std::ops::{BitAnd, BitOr, BitXor, BitAndAssign, BitOrAssign, BitXorAssign, Not, Deref};
 use crate::common::math::get_bitmask_for_index;
 
 const UNIVERSE: u64 = 0xffffffffffffffff;
@@ -32,6 +32,13 @@ impl Bitboard {
     /// Sets a bit in Bitboard to 1 ato given position.
     pub fn set_at(&mut self, bit_index: u8) {
         *self |= get_bitboard_for_index(bit_index);
+    }
+}
+
+impl Deref for Bitboard {
+    type Target = u64;
+    fn deref(&self) -> &Self::Target {
+        &self.0
     }
 }
 
@@ -76,3 +83,25 @@ impl BitXorAssign for Bitboard {
         *self = Self(self.0 ^ rhs.0);
     }
 }
+
+impl Not for Bitboard {
+    type Output = Self;
+
+    fn not(self) -> Self::Output {
+        return Self(!self.0);
+    }
+}
+
+// type BB = u64;
+//
+// impl BitAnd for BB {
+//     type Output = Self;
+//
+//     fn bitand(self, rhs: Self) -> Self::Output {
+//         return
+//     }
+// }
+//
+// fn test(l: BB, r: BB) -> BB {
+//     return l & r;
+// }
