@@ -15,8 +15,8 @@ const BOARD_SIZE: usize = 64;
 
 /// @TODO:
 /// Simplify when Coord no longer supports negative values.
-fn get_bit_index_from_coord(coord: &Coord) -> u64 {
-    return u64::try_from(coord.x + coord.y * 8).unwrap();
+fn get_bit_index_from_coord(coord: &Coord) -> u8 {
+    return u8::try_from(coord.x + coord.y * 8).unwrap();
 }
 
 /// Representation of the chess board.
@@ -46,12 +46,12 @@ impl Board {
     }
 
     /// Returns Bitboard for given piece.
-    pub fn get_bitboard(&self, piece: Piece) -> Bitboard {
+    fn get_bitboard(&self, piece: Piece) -> Bitboard {
         return self.state[piece.color][piece.kind];
     }
 
     /// Sets Bitboard's bit at given position.
-    pub fn set_bitboard(&mut self, coord: &Coord, piece: Piece) {
+    fn set_bitboard(&mut self, coord: &Coord, piece: Piece) {
         let mut bitboard = self.get_bitboard(piece);
         bitboard.set_at(get_bit_index_from_coord(coord));
 

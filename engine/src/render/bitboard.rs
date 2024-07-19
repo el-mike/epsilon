@@ -24,7 +24,7 @@ impl fmt::Display for Bitboard {
         let mut rank: u8 = 7;
 
         loop {
-            let bit_index: u64 = (rank * BITBOARD_WIDTH + file) as u64;
+            let bit_index: u8 = rank * BITBOARD_WIDTH + file;
             let char = if self.is_set_at(bit_index) { '1' } else { '0' };
 
             result.push_str(format!(" {} ", char).as_str());

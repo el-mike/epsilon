@@ -1,4 +1,3 @@
-use std::fmt;
 use crate::common::fen_symbol::FenSymbol;
 use crate::piece::piece::{Piece};
 use crate::piece::piece_color::PieceColor;

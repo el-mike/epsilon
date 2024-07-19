@@ -21,8 +21,6 @@ fn main() {
 
     let mut bitboard = Bitboard(1);
 
-    println!("{}", board.get_bitboard(Piece{ color: PieceColor::White, kind: PieceKind::Pawn }));
-
     println!("{}", bitboard);
     println!("{}", board);
 }
