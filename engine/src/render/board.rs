@@ -2,6 +2,7 @@
 
 use crate::common::coord::Coord;
 use crate::board::board::{Board, BOARD_WIDTH};
+ use crate::render::piece::get_symbol_for_piece;
 
 impl fmt::Display for Board {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -11,9 +12,12 @@ impl fmt::Display for Board {
         let mut rank = 7;
 
         loop {
-            let piece = self.get_piece(&Coord::new(file, rank));
+            let char = match self.get_piece(&Coord::new(file, rank)) {
+                Some(p) => get_symbol_for_piece(&p),
+                None => '_'
+            };
 
-            result.push_str(format!(" {} ", piece).as_str());
+            result.push_str(format!(" {} ", char).as_str());
 
             file += 1;
 

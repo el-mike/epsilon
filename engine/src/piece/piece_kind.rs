@@ -58,3 +58,5 @@ impl PieceKind {
         };
     }
 }
+
+pub const PIECE_KINDS: [PieceKind; 6] = [PieceKind::Pawn, PieceKind::Knight, PieceKind::Bishop, PieceKind::Rook, PieceKind::Queen, PieceKind::King];

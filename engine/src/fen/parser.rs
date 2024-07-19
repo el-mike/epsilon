@@ -43,7 +43,7 @@ fn parse_piece_placement(segment: &str, board: &mut Board) {
     let mut file: u8 = 0;
 
     // FEN notation starts with the top rank from the White's perspective, which is the
-    // seventh rank.
+    // eight rank (seventh index).
     let mut rank: u8 = 7;
 
     for c in segment.chars() {

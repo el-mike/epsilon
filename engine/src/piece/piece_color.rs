@@ -14,3 +14,5 @@ impl PieceColor {
         }
     }
 }
+
+pub const PIECE_COLORS: [PieceColor; 2] = [PieceColor::White, PieceColor::Black];

@@ -8,15 +8,18 @@ pub struct MoveGenerator {}
 
 impl MoveGenerator {
     pub fn generate_moves(&self, board: &Board, coord: &Coord) -> Vec<PieceMove> {
-        let source_piece = board.get_piece(coord);
+        let source_piece = match board.get_piece(coord) {
+            Some(p) => p,
+            None => return vec![],
+        };
 
         let moves: Vec<PieceMove> = match source_piece.kind {
-            PieceKind::Pawn => self.generate_pawn_moves(board, coord, source_piece),
-            PieceKind::Knight => self.generate_knight_moves(coord, source_piece),
-            PieceKind::Bishop => self.generate_bishop_moves(coord, source_piece),
-            PieceKind::Rook => self.generate_rook_moves(coord, source_piece),
-            PieceKind::Queen => self.generate_queen_moves(coord, source_piece),
-            PieceKind::King => self.generate_king_moves(coord, source_piece),
+            PieceKind::Pawn => self.generate_pawn_moves(board, coord, &source_piece),
+            PieceKind::Knight => self.generate_knight_moves(coord, &source_piece),
+            PieceKind::Bishop => self.generate_bishop_moves(coord, &source_piece),
+            PieceKind::Rook => self.generate_rook_moves(coord, &source_piece),
+            PieceKind::Queen => self.generate_queen_moves(coord, &source_piece),
+            PieceKind::King => self.generate_king_moves(coord, &source_piece),
         };
 
         return moves;
@@ -49,24 +52,27 @@ impl MoveGenerator {
     }
 
     fn generate_sliding_moves(&self, board: &Board, coord: &Coord, direction: &Coord) -> Vec<PieceMove> {
-        let source_piece = board.get_piece(coord);
-
         let mut moves: Vec<PieceMove> = Vec::new();
+
+        let source_piece = match board.get_piece(coord) {
+            Some(p) => p,
+            None => return moves
+        };
 
         let mut i = 1;
 
         loop {
             let next_coord = coord.apply_direction(direction, i);
             let target_piece = board.get_piece(&next_coord);
+            let takes = !target_piece.is_none();
 
-            if target_piece.color == source_piece.color {
+            // When trying to take piece of the same color, break.
+            if takes && target_piece.unwrap().color == source_piece.color {
                 break;
             }
 
-            // let takes = !target_piece.is_none();
-
-            // let piece_move = PieceMove::new(coord.clone(), next_coord, takes);
-            // moves.push(piece_move);
+            let piece_move = PieceMove::new(coord.clone(), next_coord, takes);
+            moves.push(piece_move);
 
             i += 1;
         }

@@ -16,13 +16,6 @@ impl Piece {
         };
     }
 
-    pub fn new_empty() -> Self {
-        return Self {
-            kind: PieceKind::Pawn,
-            color: PieceColor::White,
-        };
-    }
-
     pub fn is_opposite(&self, other_piece: &Piece) -> bool {
         return self.color != other_piece.color;
     }
