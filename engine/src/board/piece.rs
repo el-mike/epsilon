@@ -1,6 +1,3 @@
-pub const PIECE_COLORS: [PieceColor; 2] = [PieceColor::White, PieceColor::Black];
-pub const PIECE_KINDS: [PieceKind; 6] = [PieceKind::Pawn, PieceKind::Knight, PieceKind::Bishop, PieceKind::Rook, PieceKind::Queen, PieceKind::King];
-
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum PieceColor {
     White = 0,
@@ -52,3 +49,13 @@ impl PieceKind {
         };
     }
 }
+
+pub const PIECE_COLORS: [PieceColor; 2] = [PieceColor::White, PieceColor::Black];
+pub const PIECE_KINDS: [PieceKind; 6] = [
+    PieceKind::Pawn,
+    PieceKind::Knight,
+    PieceKind::Bishop,
+    PieceKind::Rook,
+    PieceKind::Queen,
+    PieceKind::King
+];
