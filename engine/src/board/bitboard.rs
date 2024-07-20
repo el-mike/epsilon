@@ -91,17 +91,3 @@ impl Not for Bitboard {
         return Self(!self.0);
     }
 }
-
-// type BB = u64;
-//
-// impl BitAnd for BB {
-//     type Output = Self;
-//
-//     fn bitand(self, rhs: Self) -> Self::Output {
-//         return
-//     }
-// }
-//
-// fn test(l: BB, r: BB) -> BB {
-//     return l & r;
-// }
