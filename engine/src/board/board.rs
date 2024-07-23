@@ -4,7 +4,7 @@ use crate::common::coord::Coord;
 use crate::board::piece::{Piece, PieceColor, PieceKind, PIECE_COLORS, PIECE_KINDS};
 
 use crate::board::castling_rights::CastlingRights;
-use crate::board::bitboards::{Bitboards, get_empty_bitboards};
+use crate::board::state::{State, get_empty_bitboards};
 use crate::board::square_color::SquareColor;
 
 pub const BOARD_WIDTH: usize = 8;
@@ -18,9 +18,9 @@ fn get_bit_index_from_coord(coord: &Coord) -> u8 {
 }
 
 /// Representation of the chess board.
-#[derive(Copy, Clone, Debug)]
+#[derive(Clone, Debug)]
 pub struct Board {
-    state: Bitboards,
+    state: State,
     pub player_to_move: PieceColor,
     pub white_castling_rights: CastlingRights,
     pub black_castling_rights: CastlingRights,
@@ -43,19 +43,9 @@ impl Board {
         };
     }
 
-    /// Returns Bitboard for given piece.
-    fn get_bitboard(&self, piece: Piece) -> &Bitboard {
-        return &self.state[piece.color][piece.kind];
-    }
-
-    /// Sets Bitboard's bit at given position.
-    fn set_bitboard(&mut self, coord: &Coord, piece: Piece) {
-        self.state[piece.color][piece.kind].set_at(get_bit_index_from_coord(coord));
-    }
-
-    /// Returns true if given Piece's Bitboard is set under given coord, false otherwise.
-    pub fn has_at(&self, coord: &Coord, piece: Piece) -> bool {
-        return self.get_bitboard(piece).is_set_at(get_bit_index_from_coord(coord));
+    /// Returns a reference to Bitboard for given piece.
+    fn get_bitboard_for_piece(&self, piece: Piece) -> Bitboard {
+        return self.state[piece.color][piece.kind];
     }
 
     /// Returns a piece under given coordinates.
@@ -66,7 +56,7 @@ impl Board {
             for kind in PIECE_KINDS {
                 let piece = Piece::new(kind, color);
 
-                let bitboard = self.get_bitboard(piece);
+                let bitboard = self.get_bitboard_for_piece(piece);
                 if bitboard.is_set_at(bit_index) {
                     return Some(piece)
                 }
@@ -76,9 +66,22 @@ impl Board {
         return None
     }
 
-    /// Sets a piece under given coordinates.
+    /// Returns true if given Piece's exists under given coord, false otherwise.
+    pub fn has_at(&self, coord: &Coord, piece: Piece) -> bool {
+        let bitboard = self.get_bitboard_for_piece(piece);
+        return bitboard.is_set_at(get_bit_index_from_coord(coord));
+    }
+
+    /// Sets a piece under given square.
     pub fn set_piece(&mut self, coord: &Coord, piece: Piece) {
-        self.set_bitboard(coord, piece);
+        self.state[piece.color][piece.kind] = self.state[piece.color][piece.kind].set_at(get_bit_index_from_coord(coord));
+    }
+
+    /// Unsets a piece under given square.
+    pub fn unset_piece(&mut self, coord: &Coord) {
+        if let Some(piece) =  self.get_piece(coord) {
+            self.state[piece.color][piece.kind] = self.state[piece.color][piece.kind].unset_at(get_bit_index_from_coord(coord));
+        }
     }
 
     /// Returns true if given coordinates are inside the board, false otherwise.

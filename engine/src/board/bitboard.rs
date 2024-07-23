@@ -1,44 +1,41 @@
-use std::ops::{BitAnd, BitOr, BitXor, BitAndAssign, BitOrAssign, BitXorAssign, Not, Deref};
-use crate::common::math::get_bitmask_for_index;
+use std::ops::{BitAnd, BitOr, BitXor, BitAndAssign, BitOrAssign, BitXorAssign, Not};
 
 const UNIVERSE: u64 = 0xffffffffffffffff;
 pub const BITBOARD_WIDTH: u8 = 8;
 pub const BITBOARD_HEIGHT: u8 = 8;
 
-/// Returns a bitmask as a Bitboard instance.
-fn get_bitboard_for_index(bit_index: u8) -> Bitboard {
-    return Bitboard(get_bitmask_for_index(bit_index))
+/// Returns a mask with a bit set specified by bit_index (nth bit of the number).
+pub fn get_bitmask_for_index(bit_index: u8) -> u64 {
+    return 1_u64 << bit_index;
 }
 
-#[derive(Eq, PartialEq, Debug, Copy, Clone)]
+#[derive(Eq, PartialEq, Debug, Clone, Copy)]
 pub struct Bitboard(pub u64);
 
 impl Bitboard {
     /// Returns true if bitboard has no bits set, false otherwise.
-    pub fn is_empty(self) -> bool {
-        return self == Bitboard(0);
+    pub fn is_empty(&self) -> bool {
+        return self.0 == 0;
     }
 
     /// Returns true if bitboard has all bits set, false otherwise.
-    pub fn is_universal(self) -> bool {
-        return self == Bitboard(UNIVERSE);
+    pub fn is_universal(&self) -> bool {
+        return self.0 == UNIVERSE;
     }
 
     /// Returns true if bitboard has a bit at given position, false otherwise.
-    pub fn is_set_at(self, bit_index: u8) -> bool {
-        return (self & get_bitboard_for_index(bit_index)) != Bitboard(0);
+    pub fn is_set_at(&self, bit_index: u8) -> bool {
+        return (self.0 & get_bitmask_for_index(bit_index)) != 0;
     }
 
-    /// Sets a bit in Bitboard to 1 ato given position.
-    pub fn set_at(&mut self, bit_index: u8) {
-        *self |= get_bitboard_for_index(bit_index);
+    /// Sets a bit in Bitboard  at given position, and returns new Bitboard.
+    pub fn set_at(self, bit_index: u8) -> Self {
+        return Self(self.0 | get_bitmask_for_index(bit_index));
     }
-}
 
-impl Deref for Bitboard {
-    type Target = u64;
-    fn deref(&self) -> &Self::Target {
-        &self.0
+    /// Unsets a bit in Bitboard at given position, and returns new Bitboard.
+    pub fn unset_at(self, bit_index: u8) -> Self {
+        return Self(self.0 & !get_bitmask_for_index(bit_index));
     }
 }
 

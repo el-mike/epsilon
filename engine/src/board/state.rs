@@ -3,7 +3,7 @@ use crate::board::bitboard::Bitboard;
 use crate::board::piece::{PieceColor, PieceKind};
 
 pub type ColorBitboards = [Bitboard; 6];
-pub type Bitboards = [ColorBitboards; 2];
+pub type State = [ColorBitboards; 2];
 
 impl Index<PieceKind> for ColorBitboards {
     type Output = Bitboard;
@@ -35,7 +35,7 @@ impl IndexMut<PieceKind> for ColorBitboards {
     }
 }
 
-impl Index<PieceColor> for Bitboards {
+impl Index<PieceColor> for State {
     type Output = ColorBitboards;
 
     fn index(&self, color: PieceColor) -> &Self::Output {
@@ -48,7 +48,7 @@ impl Index<PieceColor> for Bitboards {
     }
 }
 
-impl IndexMut<PieceColor> for Bitboards {
+impl IndexMut<PieceColor> for State {
     fn index_mut(&mut self, kind: PieceColor) -> &mut Self::Output {
         return match kind {
             PieceColor:: White => &mut self[0],
@@ -57,7 +57,7 @@ impl IndexMut<PieceColor> for Bitboards {
     }
 }
 
-pub fn get_empty_bitboards() -> Bitboards {
+pub fn get_empty_bitboards() -> State {
     return [
         [Bitboard(0), Bitboard(0), Bitboard(0), Bitboard(0), Bitboard(0), Bitboard(0)],
         [Bitboard(0), Bitboard(0), Bitboard(0), Bitboard(0), Bitboard(0), Bitboard(0)]
