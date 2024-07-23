@@ -1,21 +1,11 @@
 use crate::board::bitboard::Bitboard;
-use crate::common::coord::Coord;
-
-use crate::board::piece::{Piece, PieceColor, PieceKind, PIECE_COLORS, PIECE_KINDS};
-
+use crate::board::piece::{Piece, PieceColor, PIECE_COLORS, PIECE_KINDS};
+use crate::board::square::{Square, SquareColor};
 use crate::board::castling_rights::CastlingRights;
 use crate::board::state::{State, get_empty_bitboards};
-use crate::board::square_color::SquareColor;
 
-pub const BOARD_WIDTH: usize = 8;
-const BOARD_SIZE: usize = 64;
-
-
-/// @TODO:
-/// Simplify when Coord no longer supports negative values.
-fn get_bit_index_from_coord(coord: &Coord) -> u8 {
-    return u8::try_from(coord.x + coord.y * 8).unwrap();
-}
+pub const BOARD_WIDTH: u8 = 8;
+const BOARD_SIZE: u8 = 64;
 
 /// Representation of the chess board.
 #[derive(Clone, Debug)]
@@ -24,7 +14,7 @@ pub struct Board {
     pub player_to_move: PieceColor,
     pub white_castling_rights: CastlingRights,
     pub black_castling_rights: CastlingRights,
-    pub en_passant_coord: Option<Coord>,
+    pub en_passant_coord: Option<Square>,
     pub half_move_clock: u8,
     pub full_move_clock: u8
 }
@@ -49,8 +39,8 @@ impl Board {
     }
 
     /// Returns a piece under given coordinates.
-    pub fn get_piece(&self, coord: &Coord) -> Option<Piece> {
-        let bit_index = get_bit_index_from_coord(coord);
+    pub fn get_piece(&self, square: Square) -> Option<Piece> {
+        let bit_index = square.as_bit_index();
 
         for color in PIECE_COLORS {
             for kind in PIECE_KINDS {
@@ -67,31 +57,26 @@ impl Board {
     }
 
     /// Returns true if given Piece's exists under given coord, false otherwise.
-    pub fn has_at(&self, coord: &Coord, piece: Piece) -> bool {
+    pub fn has_at(&self, square: Square, piece: Piece) -> bool {
         let bitboard = self.get_bitboard_for_piece(piece);
-        return bitboard.is_set_at(get_bit_index_from_coord(coord));
+        return bitboard.is_set_at(square.as_bit_index());
     }
 
     /// Sets a piece under given square.
-    pub fn set_piece(&mut self, coord: &Coord, piece: Piece) {
-        self.state[piece.color][piece.kind] = self.state[piece.color][piece.kind].set_at(get_bit_index_from_coord(coord));
+    pub fn set_piece(&mut self, square: Square, piece: Piece) {
+        self.state[piece.color][piece.kind] = self.state[piece.color][piece.kind].set_at(square.as_bit_index());
     }
 
     /// Unsets a piece under given square.
-    pub fn unset_piece(&mut self, coord: &Coord) {
-        if let Some(piece) =  self.get_piece(coord) {
-            self.state[piece.color][piece.kind] = self.state[piece.color][piece.kind].unset_at(get_bit_index_from_coord(coord));
+    pub fn unset_piece(&mut self, square: Square) {
+        if let Some(piece) =  self.get_piece(square) {
+            self.state[piece.color][piece.kind] = self.state[piece.color][piece.kind].unset_at(square.as_bit_index());
         }
     }
 
-    /// Returns true if given coordinates are inside the board, false otherwise.
-    pub fn is_inside(&self, coord: &Coord) -> bool {
-        return coord.x < BOARD_WIDTH as i8 && coord.y < BOARD_WIDTH as i8;
-    }
-
     /// Returns the color of a square under given coordinates.
-    pub fn get_square_color(&self, coord: &Coord) -> SquareColor {
-        return if coord.y % 2 == 0 && coord.x % 2 == 0 {
+    pub fn get_square_color(&self, square: Square) -> SquareColor {
+        return if square.as_bit_index() % 2 == 0 {
             SquareColor::Black
         } else {
             SquareColor::White

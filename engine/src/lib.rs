@@ -1,9 +1,5 @@
 extern crate core;
 
-use crate::common::coord::Coord;
-use crate::moves::piece_move::PieceMove;
-
-mod common;
 mod fen;
 mod board;
 mod moves;

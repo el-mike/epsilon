@@ -1,9 +1,9 @@
 use crate::board::board::Board;
 use crate::board::castling_rights::CastlingRights;
-use crate::common::algebraic_coord::AlgebraicCoord;
-use crate::common::coord::Coord;
-use crate::common::fen_symbol::FenSymbol;
+use crate::board::algebraic_coord::AlgebraicCoord;
+use crate::fen::fen_symbol::FenSymbol;
 use crate::board::piece::{Piece, PieceColor, PieceKind};
+use crate::board::square::Square;
 
 const FEN_RANK_BREAK: char = '/';
 
@@ -62,7 +62,7 @@ fn parse_piece_placement(segment: &str, board: &mut Board) {
 
         let piece = get_piece_from_fen_symbol(c);
 
-        board.set_piece(&Coord::new(file as i8, rank as i8), piece);
+        board.set_piece(Square::from_board_coords(file, rank), piece);
 
         file += 1;
     }
@@ -105,7 +105,7 @@ fn parse_en_passant(segment: &str, board: &mut Board) {
 
     let coord = AlgebraicCoord::from_string(segment);
 
-    board.en_passant_coord = Some(coord.to_coord())
+    board.en_passant_coord = Some(coord.to_square())
 }
 
 fn parse_half_move_clock(segment: &str, board: &mut Board) {

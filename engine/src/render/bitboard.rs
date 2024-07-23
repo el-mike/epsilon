@@ -17,7 +17,6 @@ impl fmt::Display for Bitboard {
             0 0 0 0 0 0 0 0
             0 0 0 0 0 0 0 0 <- h1 (bit 7)
             ^-a1 (bit 0)
-
         */
 
         let mut file: u8 = 0;

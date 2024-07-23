@@ -1,15 +1,15 @@
-use crate::common::coord::Coord;
 use crate::board::piece::Piece;
+use crate::board::square::{Square};
 
 pub struct PieceMove {
-    pub source: Coord,
-    pub target: Coord,
+    pub source: Square,
+    pub target: Square,
     pub takes: bool,
     pub taken_piece: Option<Piece>,
 }
 
 impl PieceMove {
-    pub fn new(source: Coord, target: Coord, takes: bool) -> Self {
+    pub fn new(source: Square, target: Square, takes: bool) -> Self {
         return Self {
             source,
             target,

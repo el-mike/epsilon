@@ -1,10 +1,10 @@
-use crate::common::coord::Coord;
+use crate::board::square::Square;
 
 pub struct AlgebraicCoord {
     value: String,
 }
 
-const ASCII_A_CODE: i8 = 97;
+const ASCII_A_CODE: u8 = 97;
 
 impl AlgebraicCoord {
     pub fn from_string(algebraic_coord: &str) -> Self {
@@ -17,18 +17,21 @@ impl AlgebraicCoord {
         return Self { value: String::from(algebraic_coord) };
     }
 
-    pub fn from_coord(coord: &Coord) -> Self {
-        let rank = char::from(coord.y as u8);
+    pub fn from_square(square: Square) -> Self {
+        let (file, rank) = square.to_board_coords();
 
-        let ascii_file = ASCII_A_CODE + coord.x;
-        let file = (ascii_file as u8) as char;
+
+        let ascii_file = ASCII_A_CODE + file;
+        let file_char = ascii_file as char;
+
+        let rank_char = char::from(rank);
 
         return Self {
-            value: format!("{file}{rank}"),
+            value: format!("{file_char}{rank_char}"),
         }
     }
 
-    pub fn to_coord(&self) -> Coord {
+    pub fn to_square(&self) -> Square {
         let chars: Vec<char> = self.value.chars().collect();
 
         if chars.len() != 2 {
@@ -36,12 +39,9 @@ impl AlgebraicCoord {
         }
 
         /// We need to add "1" to the file, as subtracting ASCII "a" code is zero-based.
-        let file = ((chars[0] as u32) - ASCII_A_CODE as u32) + 1;
-        let rank = chars[1].to_digit(10).unwrap();
+        let file = (chars[0] as u8 - ASCII_A_CODE) + 1;
+        let rank: u8 = chars[1].to_digit(10).unwrap().try_into().unwrap();
 
-        return Coord {
-            x: file as i8,
-            y: rank as i8,
-        }
+        return Square::from_board_coords(file, rank);
     }
 }

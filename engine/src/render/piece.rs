@@ -1,4 +1,4 @@
-use crate::common::fen_symbol::FenSymbol;
+use crate::fen::fen_symbol::FenSymbol;
 use crate::board::piece::{Piece, PieceColor, PieceKind};
 
 pub fn get_symbol_for_piece(piece: &Piece) -> char {

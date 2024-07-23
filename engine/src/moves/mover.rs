@@ -11,8 +11,8 @@ impl Mover {
     pub fn make_move(board: &mut Board, piece_move: &mut PieceMove) {
         // @TODO:
         // Add safety.
-        let source = board.get_piece(&piece_move.source).unwrap();
-        let target = board.get_piece(&piece_move.target).unwrap();
+        let source = board.get_piece(piece_move.source).unwrap();
+        let target = board.get_piece(piece_move.target).unwrap();
 
         if source.color == target.color {
             panic!("{}", illegal_move_message());
@@ -22,7 +22,7 @@ impl Mover {
         //     piece_move.taken_piece = Some(*target);
         // }
 
-        board.set_piece(&piece_move.target, source);
+        board.set_piece(piece_move.target, source);
     }
 
     /// Unmakes given move and changes the state of the board.
@@ -31,12 +31,12 @@ impl Mover {
     pub fn unmake_move(board: &mut Board, piece_move: &PieceMove) {
         // @TODO:
         // Add safety.
-        let target = board.get_piece(&piece_move.target).unwrap();
+        let target = board.get_piece(piece_move.target).unwrap();
 
-        board.set_piece(&piece_move.source, target);
+        board.set_piece(piece_move.source, target);
 
         if let Some(taken_piece) = piece_move.taken_piece {
-            board.set_piece(&piece_move.target, taken_piece);
+            board.set_piece(piece_move.target, taken_piece);
         }
     }
 }
