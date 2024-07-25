@@ -1,8 +1,8 @@
 use crate::board::bitboard::Bitboard;
+use crate::board::castling_rights::CastlingRights;
 use crate::board::piece::{Piece, PieceColor, PIECE_COLORS, PIECE_KINDS};
 use crate::board::square::{Square, SquareColor};
-use crate::board::castling_rights::CastlingRights;
-use crate::board::state::{State, get_empty_bitboards};
+use crate::board::state::{get_empty_bitboards, State};
 
 pub const BOARD_WIDTH: u8 = 8;
 const BOARD_SIZE: u8 = 64;
@@ -16,7 +16,7 @@ pub struct Board {
     pub black_castling_rights: CastlingRights,
     pub en_passant_coord: Option<Square>,
     pub half_move_clock: u8,
-    pub full_move_clock: u8
+    pub full_move_clock: u8,
 }
 
 impl Board {
@@ -29,7 +29,7 @@ impl Board {
             black_castling_rights: CastlingRights::new(),
             en_passant_coord: None,
             half_move_clock: 0,
-            full_move_clock: 0
+            full_move_clock: 0,
         };
     }
 
@@ -48,12 +48,12 @@ impl Board {
 
                 let bitboard = self.get_bitboard_for_piece(piece);
                 if bitboard.is_set_at(bit_index) {
-                    return Some(piece)
+                    return Some(piece);
                 }
             }
         }
 
-        return None
+        return None;
     }
 
     /// Returns true if given Piece's exists under given coord, false otherwise.
@@ -64,13 +64,15 @@ impl Board {
 
     /// Sets a piece under given square.
     pub fn set_piece(&mut self, square: Square, piece: Piece) {
-        self.state[piece.color][piece.kind] = self.state[piece.color][piece.kind].set_at(square.as_bit_index());
+        self.state[piece.color][piece.kind] =
+            self.state[piece.color][piece.kind].set_at(square.as_bit_index());
     }
 
     /// Unsets a piece under given square.
     pub fn unset_piece(&mut self, square: Square) {
-        if let Some(piece) =  self.get_piece(square) {
-            self.state[piece.color][piece.kind] = self.state[piece.color][piece.kind].unset_at(square.as_bit_index());
+        if let Some(piece) = self.get_piece(square) {
+            self.state[piece.color][piece.kind] =
+                self.state[piece.color][piece.kind].unset_at(square.as_bit_index());
         }
     }
 

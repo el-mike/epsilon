@@ -1,8 +1,8 @@
- use std::fmt;
+use std::fmt;
 
-use crate::board::square::Square;
 use crate::board::board::{Board, BOARD_WIDTH};
- use crate::render::piece::get_symbol_for_piece;
+use crate::board::square::Square;
+use crate::render::piece::get_symbol_for_piece;
 
 impl fmt::Display for Board {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
@@ -14,7 +14,7 @@ impl fmt::Display for Board {
         loop {
             let char = match self.get_piece(Square::from_board_coords(file, rank)) {
                 Some(p) => get_symbol_for_piece(&p),
-                None => '_'
+                None => '_',
             };
 
             result.push_str(format!(" {} ", char).as_str());

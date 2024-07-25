@@ -14,12 +14,13 @@ impl AlgebraicCoord {
             panic!("Incorrect algebraic coord: {}", algebraic_coord);
         }
 
-        return Self { value: String::from(algebraic_coord) };
+        return Self {
+            value: String::from(algebraic_coord),
+        };
     }
 
     pub fn from_square(square: Square) -> Self {
         let (file, rank) = square.to_board_coords();
-
 
         let ascii_file = ASCII_A_CODE + file;
         let file_char = ascii_file as char;
@@ -28,7 +29,7 @@ impl AlgebraicCoord {
 
         return Self {
             value: format!("{file_char}{rank_char}"),
-        }
+        };
     }
 
     pub fn to_square(&self) -> Square {

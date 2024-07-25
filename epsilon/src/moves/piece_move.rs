@@ -1,5 +1,5 @@
 use crate::board::piece::Piece;
-use crate::board::square::{Square};
+use crate::board::square::Square;
 
 pub struct PieceMove {
     pub source: Square,
@@ -15,6 +15,6 @@ impl PieceMove {
             target,
             takes,
             taken_piece: None,
-        }
+        };
     }
 }

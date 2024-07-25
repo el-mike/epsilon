@@ -1,6 +1,6 @@
+use crate::board::bitboard::{Bitboard, BITBOARD_WIDTH};
 use std::fmt;
 use std::fmt::Formatter;
-use crate::board::bitboard::{Bitboard, BITBOARD_WIDTH};
 
 impl fmt::Display for Bitboard {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
@@ -34,7 +34,11 @@ impl fmt::Display for Bitboard {
                 result.push('\n');
                 file = 0;
 
-                if rank != 0 { rank -= 1 } else { break };
+                if rank != 0 {
+                    rank -= 1
+                } else {
+                    break;
+                };
             }
         }
 

@@ -1,4 +1,4 @@
-use std::ops::{BitAnd, BitOr, BitXor, BitAndAssign, BitOrAssign, BitXorAssign, Not};
+use std::ops::{BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, Not};
 
 const UNIVERSE: u64 = 0xffffffffffffffff;
 pub const BITBOARD_WIDTH: u8 = 8;

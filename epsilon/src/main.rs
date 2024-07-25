@@ -1,12 +1,12 @@
 extern crate core;
-mod fen;
 mod board;
+mod fen;
 mod moves;
-mod render;
 mod position;
+mod render;
 
-use crate::fen::parser;
 use crate::board::bitboard::Bitboard;
+use crate::fen::parser;
 
 fn main() {
     let mut board = parser::parse(fen::constants::FEN_STARTING_POSITION);

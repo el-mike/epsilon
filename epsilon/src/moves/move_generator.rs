@@ -1,6 +1,6 @@
 use crate::board::board::Board;
 use crate::board::piece::{Piece, PieceKind};
-use crate::board::square::{Square};
+use crate::board::square::Square;
 use crate::moves::piece_move::PieceMove;
 
 pub struct MoveGenerator {}

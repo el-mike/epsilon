@@ -1,10 +1,10 @@
 extern crate core;
 
-mod fen;
 mod board;
+mod fen;
 mod moves;
-mod render;
 mod position;
+mod render;
 
 #[no_mangle]
 pub extern "C" fn evaluate() -> String {

@@ -1,9 +1,9 @@
+use crate::board::algebraic_coord::AlgebraicCoord;
 use crate::board::board::Board;
 use crate::board::castling_rights::CastlingRights;
-use crate::board::algebraic_coord::AlgebraicCoord;
-use crate::fen::fen_symbol::FenSymbol;
 use crate::board::piece::{Piece, PieceColor, PieceKind};
 use crate::board::square::Square;
+use crate::fen::fen_symbol::FenSymbol;
 
 const FEN_RANK_BREAK: char = '/';
 
@@ -136,7 +136,7 @@ fn get_piece_from_fen_symbol(symbol: char) -> Piece {
         FenSymbol::ROOK => PieceKind::Rook,
         FenSymbol::QUEEN => PieceKind::Queen,
         FenSymbol::KING => PieceKind::King,
-        _ => panic!("Incorrect FEN symbol: {symbol}")
+        _ => panic!("Incorrect FEN symbol: {symbol}"),
     };
 
     let color = if symbol.is_uppercase() {

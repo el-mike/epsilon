@@ -1,3 +1,3 @@
-pub mod piece;
-pub mod board;
 mod bitboard;
+pub mod board;
+pub mod piece;

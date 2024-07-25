@@ -22,20 +22,15 @@ pub struct Piece {
     pub color: PieceColor,
 }
 
-
 impl Piece {
     pub fn new(kind: PieceKind, color: PieceColor) -> Self {
-        return Self {
-            kind,
-            color,
-        };
+        return Self { kind, color };
     }
 
     pub fn is_opposite(&self, other_piece: &Piece) -> bool {
         return self.color != other_piece.color;
     }
 }
-
 
 impl PieceKind {
     pub fn value(&self) -> PieceValue {
@@ -57,5 +52,5 @@ pub const PIECE_KINDS: [PieceKind; 6] = [
     PieceKind::Bishop,
     PieceKind::Rook,
     PieceKind::Queen,
-    PieceKind::King
+    PieceKind::King,
 ];
