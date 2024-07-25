@@ -1,5 +1,5 @@
 [package]
-name = "engine"
+name = "epsilon"
 version = "0.1.0"
 edition = "2021"
 
@@ -8,7 +8,7 @@ edition = "2021"
 [dependencies]
 
 [lib]
-name="engine_lib"
+name="epsilon_api"
 path="src/lib.rs"
 # Needs to have "rlib" too, otherwise it throws an error.
 crate-type=["rlib", "dylib"]

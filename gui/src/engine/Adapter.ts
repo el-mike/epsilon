@@ -21,7 +21,7 @@ export class EngineAdapter {
      * @TODO:
      * Copy the lib with webpack.
      */
-    return path.join(app.getAppPath(), '../engine/target/release/libengine_lib.so');
+    return path.join(app.getAppPath(), '../epsilon/target/release/libengine_lib.so');
   }
 
   public constructor() {
