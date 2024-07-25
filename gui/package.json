@@ -1,8 +1,8 @@
 {
-  "name": "chess",
+  "name": "epsilon-gui",
   "productName": "chess",
   "version": "1.0.0",
-  "description": "My Electron application description",
+  "description": "Electron-based GUI for epsilon chess engine",
   "main": ".webpack/main",
   "scripts": {
     "start": "electron-forge start",
