@@ -1,4 +1,4 @@
-import { Piece } from '../piece';
+import { Piece, Pawn } from '../piece';
 import {
   BoardSquareColor,
   PieceColor
@@ -7,7 +7,6 @@ import { GameObject } from '../GameObject';
 import { config } from '../../config';
 import Konva from 'konva';
 import { StageManager } from '../../stage';
-import { Pawn } from '../pawn';
 
 export class BoardSquare extends GameObject {
   private _rect: Konva.Rect;

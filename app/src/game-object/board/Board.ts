@@ -1,4 +1,4 @@
-import { BoardSquare } from "../board-square";
+import { BoardSquare } from "./BoardSquare";
 import { BoardSquareColor } from "../../common";
 import { GameObject } from "../GameObject";
 import { config } from '../../config';
