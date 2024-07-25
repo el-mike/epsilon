@@ -21,7 +21,7 @@ export class EngineAdapter {
      * @TODO:
      * Copy the lib with webpack.
      */
-    return path.join(app.getAppPath(), '../epsilon/target/release/libepsilon_api.so');
+    return path.join(app.getAppPath(), '../target/release/libepsilon_api.so');
   }
 
   public constructor() {
