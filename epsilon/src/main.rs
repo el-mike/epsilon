@@ -1,11 +1,12 @@
 extern crate core;
+mod bitboard;
 mod board;
 mod fen;
 mod moves;
 mod position;
 mod render;
 
-use crate::board::bitboard::Bitboard;
+use crate::bitboard::bitboard::Bitboard;
 use crate::fen::parser;
 
 fn main() {

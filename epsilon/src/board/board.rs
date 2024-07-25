@@ -1,4 +1,4 @@
-use crate::board::bitboard::Bitboard;
+use crate::bitboard::bitboard::Bitboard;
 use crate::board::castling_rights::CastlingRights;
 use crate::board::piece::{Piece, PieceColor, PIECE_COLORS, PIECE_KINDS};
 use crate::board::square::{Square, SquareColor};

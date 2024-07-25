@@ -1,4 +1,4 @@
-use crate::board::bitboard::Bitboard;
+use crate::bitboard::bitboard::Bitboard;
 use crate::board::piece::{PieceColor, PieceKind};
 use std::ops::{Index, IndexMut};
 

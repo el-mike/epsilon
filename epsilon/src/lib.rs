@@ -1,5 +1,6 @@
 extern crate core;
 
+mod bitboard;
 mod board;
 mod fen;
 mod moves;

@@ -1,4 +1,4 @@
-use crate::board::bitboard::{Bitboard, BITBOARD_WIDTH};
+use crate::bitboard::bitboard::{Bitboard, BITBOARD_WIDTH};
 use std::fmt;
 use std::fmt::Formatter;
 
