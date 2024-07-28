@@ -8,7 +8,7 @@ pub enum SquareColor {
 
 /// Helper enum representing each square on the chess board.
 /// Note that each member's value corresponds with bit index,
-/// as defined in Little Endian Rank-File Mapping (the least significant bit is A1).
+/// as defined in Little Endian Rank-File Mapping (the least significant bit is A1, then A2 and so on).
 ///
 ///   v-a8 (bit 56)
 ///   0 0 0 0 0 0 0 0 <- h8 (bit 63)

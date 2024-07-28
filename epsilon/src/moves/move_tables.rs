@@ -1,17 +1,18 @@
 use crate::bitboard::bitboard::Bitboard;
 use std::ops::{Index, IndexMut};
-use crate::bitboard::direction::Direction;
-use crate::bitboard::masks::{NOT_A_FILE, NOT_H_FILE};
+use crate::bitboard::direction::{Direction, KnightDirection};
+use crate::bitboard::masks::{NOT_A_FILE, NOT_AB_FILE, NOT_H_FILE, NOT_GH_FILE};
 use crate::board::piece::PieceColor;
 use crate::board::square::{Square, SQUARES};
 use crate::render::bitboard::render_moves_for_piece;
 
 /// One Bitboard of possible moves per every square on the board.
-pub type SquareMoveTable = [Bitboard; Bitboard::SIZE as usize];
-/// One set of moves per each piece color (player).
-pub type MoveTable = [SquareMoveTable; 2];
+pub type MoveTable = [Bitboard; Bitboard::SIZE as usize];
+/// Table for pawn moves, which are color-specific (black and white pawns have different moves
+/// for the same square.
+pub type ColorMoveTable = [MoveTable; 2];
 
-impl Index<Square> for SquareMoveTable {
+impl Index<Square> for MoveTable {
     type Output = Bitboard;
 
     fn index(&self, square: Square) -> &Self::Output {
@@ -19,42 +20,47 @@ impl Index<Square> for SquareMoveTable {
     }
 }
 
-impl IndexMut<Square> for SquareMoveTable {
+impl IndexMut<Square> for MoveTable {
     fn index_mut(&mut self, square: Square) -> &mut Self::Output {
         return &mut self[square.as_index()];
     }
 }
 
-impl Index<PieceColor> for MoveTable {
-    type Output = SquareMoveTable;
+impl Index<PieceColor> for ColorMoveTable {
+    type Output = MoveTable;
 
     fn index(&self, color: PieceColor) -> &Self::Output {
         return &self[color.as_index()];
     }
 }
 
-impl IndexMut<PieceColor> for MoveTable {
+impl IndexMut<PieceColor> for ColorMoveTable {
     fn index_mut(&mut self, color: PieceColor) -> &mut Self::Output {
         return &mut self[color.as_index()];
     }
 }
 
+
 pub struct MoveTables {
-    pub pawn_attacks: MoveTable
+    pub pawn_attacks: ColorMoveTable,
+    pub knight_attacks: MoveTable,
+    pub king_attacks: MoveTable
 }
 
 impl MoveTables {
     pub fn new() -> Self {
         return MoveTables {
-               pawn_attacks: MoveTables::calculate_pawn_attacks()
+            pawn_attacks: MoveTables::calculate_pawn_attacks(),
+            knight_attacks: MoveTables::calculate_knight_attacks(),
+            king_attacks: MoveTables::calculate_king_attacks()
         }
     }
 
-    fn calculate_pawn_attacks() -> MoveTable {
-        let mut white_table: SquareMoveTable = [Bitboard(0); Bitboard::SIZE as usize];
-        let mut black_table: SquareMoveTable = [Bitboard(0); Bitboard::SIZE as usize];
+    fn calculate_pawn_attacks() -> ColorMoveTable {
+        let mut white_table: MoveTable = [Bitboard(0); Bitboard::SIZE as usize];
+        let mut black_table: MoveTable = [Bitboard(0); Bitboard::SIZE as usize];
 
-        Self::iterate_over_board(|square| {
+        Self::iterate_over_squares(|square| {
             let position_bitboard = Bitboard::from_bit_index(square.as_bit_index());
 
             // White pawn.
@@ -73,7 +79,32 @@ impl MoveTables {
         return [white_table, black_table];
     }
 
-    fn iterate_over_board<F: FnMut(Square)>(mut callback: F) {
+    fn calculate_knight_attacks() -> MoveTable {
+        let mut table: MoveTable = [Bitboard(0); Bitboard::SIZE as usize];
+
+        Self::iterate_over_squares(|square| {
+            let position_bitboard = Bitboard::from_bit_index(square.as_bit_index());
+
+            table[square] |= (position_bitboard << KnightDirection::TOP_WEST) & NOT_GH_FILE;
+            table[square] |= (position_bitboard << KnightDirection::NORTH_WEST) & NOT_H_FILE;
+            table[square] |= (position_bitboard << KnightDirection::NORTH_EAST) & NOT_A_FILE;
+            table[square] |= (position_bitboard << KnightDirection::TOP_EAST) & NOT_AB_FILE;
+            table[square] |= (position_bitboard >> KnightDirection::BOTTOM_EAST) & NOT_AB_FILE;
+            table[square] |= (position_bitboard >> KnightDirection::SOUTH_EAST) & NOT_A_FILE;
+            table[square] |= (position_bitboard >> KnightDirection::SOUTH_WEST) & NOT_H_FILE;
+            table[square] |= (position_bitboard >> KnightDirection::BOTTOM_WEST) & NOT_GH_FILE;
+        });
+
+        return table;
+    }
+
+    fn calculate_king_attacks() -> MoveTable {
+        let mut table: MoveTable = [Bitboard(0); Bitboard::SIZE as usize];
+
+        return table;
+    }
+
+    fn iterate_over_squares<F: FnMut(Square)>(mut callback: F) {
         for square in SQUARES {
             callback(square);
         }

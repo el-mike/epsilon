@@ -60,7 +60,7 @@ pub fn render_moves_for_piece(piece_square: Square, attacks_bitboard: Bitboard) 
         if bit_index == piece_square.as_bit_index() {
             char = '*';
         } else {
-            char = if attacks_bitboard.is_set_at(bit_index) { '1' } else { '0' };
+            char = if attacks_bitboard.is_set_at(bit_index) { '1' } else { '_' };
         }
 
         result.push_str(format!(" {} ", char).as_str());

@@ -7,7 +7,7 @@
 ///               /  |  \
 ///           -9    -8    -7
 ///   soWe         sout         soEa
-/// Note that DirectionValue is always positive, representing absolute value -
+/// Note that Direction is always positive, representing absolute value -
 /// the actual direction applied should be decided at calling, by using right of left bit shift.
 
 pub struct Direction {}
@@ -25,4 +25,14 @@ impl Direction {
 
 pub struct KnightDirection {}
 
-impl KnightDirection {}
+impl KnightDirection {
+    pub const TOP_WEST: u8 = 6;
+    pub const NORTH_WEST: u8 = 15;
+    pub const NORTH_EAST: u8 = 17;
+    pub const TOP_EAST: u8 = 10;
+    pub const BOTTOM_EAST: u8 = 6;
+    pub const SOUTH_EAST: u8 = 15;
+    pub const SOUTH_WEST: u8 = 17;
+    pub const BOTTOM_WEST: u8 = 10;
+}
+

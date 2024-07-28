@@ -7,6 +7,8 @@ mod position;
 mod render;
 
 use crate::bitboard::bitboard::Bitboard;
+use crate::bitboard::direction::KnightDirection;
+use crate::bitboard::masks::{NOT_AB_FILE, NOT_GH_FILE};
 use crate::board::piece::PieceColor;
 use crate::board::square::{Square, SQUARES};
 use crate::fen::parser;
@@ -18,6 +20,4 @@ fn main() {
     let tables = move_tables::MoveTables::new();
 
     println!("{}", board);
-
-    render_moves_for_piece(Square::E4, tables.pawn_attacks[PieceColor::White][Square::E4]);
 }
