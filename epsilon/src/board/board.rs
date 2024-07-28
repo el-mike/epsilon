@@ -8,7 +8,7 @@ pub const BOARD_WIDTH: u8 = 8;
 const BOARD_SIZE: u8 = 64;
 
 /// Representation of the chess board.
-#[derive(Clone, Debug)]
+#[derive(Debug)]
 pub struct Board {
     state: State,
     pub player_to_move: PieceColor,
@@ -78,7 +78,7 @@ impl Board {
 
     /// Returns the color of a square under given coordinates.
     pub fn get_square_color(&self, square: Square) -> SquareColor {
-        return if square.as_bit_index() % 2 == 0 {
+        return if square.as_index() % 2 == 0 {
             SquareColor::Black
         } else {
             SquareColor::White

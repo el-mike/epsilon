@@ -1,8 +1,6 @@
-use std::ops::{BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, Not};
+use std::ops::{BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, Not, Shl, Shr};
 
 const UNIVERSE: u64 = 0xffffffffffffffff;
-pub const BITBOARD_WIDTH: u8 = 8;
-pub const BITBOARD_HEIGHT: u8 = 8;
 
 /// Returns a mask with a bit set specified by bit_index (nth bit of the number).
 pub fn get_bitmask_for_index(bit_index: u8) -> u64 {
@@ -13,6 +11,19 @@ pub fn get_bitmask_for_index(bit_index: u8) -> u64 {
 pub struct Bitboard(pub u64);
 
 impl Bitboard {
+    pub const WIDTH: u8 = 8;
+    pub const SIZE: u8 = 64;
+
+    /// Returns an empty Bitboard.
+    pub fn get_empty() -> Self {
+        return Bitboard(0);
+    }
+
+    /// Returns Bitboard for given bit index.
+    pub fn from_bit_index(bit_index: u8) -> Self {
+        return Self(get_bitmask_for_index(bit_index));
+    }
+
     /// Returns true if bitboard has no bits set, false otherwise.
     pub fn is_empty(&self) -> bool {
         return self.0 == 0;
@@ -86,5 +97,21 @@ impl Not for Bitboard {
 
     fn not(self) -> Self::Output {
         return Self(!self.0);
+    }
+}
+
+impl Shl<u8> for Bitboard {
+    type Output = Self;
+
+    fn shl(self, rhs: u8) -> Self::Output {
+        return Self(self.0 << rhs);
+    }
+}
+
+impl Shr<u8> for Bitboard {
+    type Output = Self;
+
+    fn shr(self, rhs: u8) -> Self::Output {
+        return Self(self.0 >> rhs);
     }
 }

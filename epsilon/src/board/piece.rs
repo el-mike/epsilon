@@ -32,7 +32,19 @@ impl Piece {
     }
 }
 
+impl PieceColor {
+    /// Returns index for given piece color (0 - 1).
+    pub fn as_index(self) -> usize {
+        return self as usize;
+    }
+}
+
 impl PieceKind {
+    /// Returns index for given piece kind (0 - 5).
+    pub fn as_index(self) -> usize {
+        return self as usize;
+    }
+
     pub fn value(&self) -> PieceValue {
         return match self {
             PieceKind::Pawn => 1,
