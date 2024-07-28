@@ -2,7 +2,7 @@ import { BoardSquare } from "./BoardSquare";
 import { BoardSquareColor } from "../../common";
 import { GameObject } from "../GameObject";
 import { config } from '../../config';
-import { StageManager } from '../../stage';
+import { StageManager } from '../../core';
 
 export type IterateFn = (
   square: BoardSquare,

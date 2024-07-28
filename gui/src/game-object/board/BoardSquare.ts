@@ -1,4 +1,7 @@
-import { Piece, Pawn } from '../piece';
+import {
+  Piece,
+  Rook
+} from '../piece';
 import {
   BoardSquareColor,
   PieceColor
@@ -6,7 +9,7 @@ import {
 import { GameObject } from '../GameObject';
 import { config } from '../../config';
 import Konva from 'konva';
-import { StageManager } from '../../stage';
+import { StageManager } from '../../core';
 
 export class BoardSquare extends GameObject {
   private _rect: Konva.Rect;
@@ -43,7 +46,7 @@ export class BoardSquare extends GameObject {
 
 
     if (this._rank < 2 || this._rank > 5) {
-      this._piece = new Pawn(PieceColor.Black, x, y);
+      this._piece = new Rook(PieceColor.Black, x, y);
 
       this._piece.init();
     }

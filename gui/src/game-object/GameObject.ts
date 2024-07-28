@@ -1,4 +1,4 @@
-import { StageManager } from '../stage';
+import { StageManager } from '../core';
 
 export abstract class GameObject {
   protected _rendered: boolean;

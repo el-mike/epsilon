@@ -57,6 +57,8 @@ export class TextureService {
               resolve();
             };
 
+            image.onerror = reject;
+
             image.src = src;
           }),
       ),
