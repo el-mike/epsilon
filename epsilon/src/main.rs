@@ -20,4 +20,8 @@ fn main() {
     let tables = move_tables::MoveTables::new();
 
     println!("{}", board);
+
+    let square = Square::B4;
+
+    render_moves_for_piece(square, tables.king_attacks[square]);
 }

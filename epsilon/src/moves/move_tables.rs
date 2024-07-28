@@ -85,6 +85,8 @@ impl MoveTables {
         Self::iterate_over_squares(|square| {
             let position_bitboard = Bitboard::from_bit_index(square.as_bit_index());
 
+            // Get given attack by Direction offset, and clear if it lands on the other
+            // side of the board (overflowing).
             table[square] |= (position_bitboard << KnightDirection::TOP_WEST) & NOT_GH_FILE;
             table[square] |= (position_bitboard << KnightDirection::NORTH_WEST) & NOT_H_FILE;
             table[square] |= (position_bitboard << KnightDirection::NORTH_EAST) & NOT_A_FILE;
@@ -100,6 +102,23 @@ impl MoveTables {
 
     fn calculate_king_attacks() -> MoveTable {
         let mut table: MoveTable = [Bitboard(0); Bitboard::SIZE as usize];
+
+        Self::iterate_over_squares(|square| {
+            let position_bitboard = Bitboard::from_bit_index(square.as_bit_index());
+
+            // Get given attack by Direction offset, and clear if it lands on the other
+            // side of the board (overflowing).
+            // Note that we don't need to clear NORTH and SOUTH directions, as they will
+            // simply overflow outside of the 64 bit number.
+            table[square] |= (position_bitboard << Direction::NORTH_WEST) & NOT_H_FILE;
+            table[square] |= position_bitboard << Direction::NORTH;
+            table[square] |= (position_bitboard << Direction::NORTH_EAST) & NOT_A_FILE;
+            table[square] |= (position_bitboard << Direction::EAST) & NOT_A_FILE;
+            table[square] |= (position_bitboard >> Direction::SOUTH_EAST) & NOT_A_FILE;
+            table[square] |= position_bitboard >> Direction::SOUTH;
+            table[square] |= (position_bitboard >> Direction::SOUTH_WEST) & NOT_H_FILE;
+            table[square] |= (position_bitboard >> Direction::WEST) & NOT_H_FILE;
+        });
 
         return table;
     }
