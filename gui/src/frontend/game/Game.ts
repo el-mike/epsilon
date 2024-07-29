@@ -8,10 +8,10 @@ import {
   GameEvent,
   GameState,
   PieceColor,
-  PieceKind
-} from '../common';
-import { EngineBoardState } from '../common/models/engine';
-import { mapBitboardsToSquares } from '../engine/mappers';
+  PieceKind,
+  EngineBoardState
+} from '@common/models';
+import { mapBitboardsToSquares } from '@backend/engine/mappers';
 
 export class Game {
   private _texturesService: TextureService = TextureService.getInstance();

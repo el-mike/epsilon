@@ -1,7 +1,7 @@
 import {
   GameEvent,
   GameState
-} from '../common/models';
+} from '@common/models';
 import { EventBus } from './EventBus';
 
 export class StateManager {

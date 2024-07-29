@@ -1,18 +1,18 @@
 import { Texture } from "./texture.enum";
 
-import whitePawn from "../assets/board-pieces/256h/w_pawn_png_256px.png";
-import whiteRook from "../assets/board-pieces/256h/w_rook_png_256px.png";
-import whiteKnight from "../assets/board-pieces/256h/w_knight_png_256px.png";
-import whiteBishop from "../assets/board-pieces/256h/w_bishop_png_256px.png";
-import whiteQueen from "../assets/board-pieces/256h/w_queen_png_256px.png";
-import whiteKing from "../assets/board-pieces/256h/w_king_png_256px.png";
+import whitePawn from "@assets/board-pieces/256h/w_pawn_png_256px.png";
+import whiteRook from "@assets/board-pieces/256h/w_rook_png_256px.png";
+import whiteKnight from "@assets/board-pieces/256h/w_knight_png_256px.png";
+import whiteBishop from "@assets/board-pieces/256h/w_bishop_png_256px.png";
+import whiteQueen from "@assets/board-pieces/256h/w_queen_png_256px.png";
+import whiteKing from "@assets/board-pieces/256h/w_king_png_256px.png";
 
-import blackPawn from "../assets/board-pieces/256h/b_pawn_png_256px.png";
-import blackRook from "../assets/board-pieces/256h/b_rook_png_256px.png";
-import blackKnight from "../assets/board-pieces/256h/b_knight_png_256px.png";
-import blackBishop from "../assets/board-pieces/256h/b_bishop_png_256px.png";
-import blackQueen from "../assets/board-pieces/256h/b_queen_png_256px.png";
-import blackKing from "../assets/board-pieces/256h/b_king_png_256px.png";
+import blackPawn from "@assets/board-pieces/256h/b_pawn_png_256px.png";
+import blackRook from "@assets/board-pieces/256h/b_rook_png_256px.png";
+import blackKnight from "@assets/board-pieces/256h/b_knight_png_256px.png";
+import blackBishop from "@assets/board-pieces/256h/b_bishop_png_256px.png";
+import blackQueen from "@assets/board-pieces/256h/b_queen_png_256px.png";
+import blackKing from "@assets/board-pieces/256h/b_king_png_256px.png";
 
 const TEXTURE_SRC_MAP: { [key in Texture]: string } = {
   [Texture.WhitePawn]: whitePawn,

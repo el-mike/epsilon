@@ -9,10 +9,9 @@ import {
 } from '../piece';
 import {
   Piece,
-  PieceColor,
   PieceKind,
   SquareColor
-} from '../../common/models';
+} from '@common/models';
 import { GameObject } from '../GameObject';
 import { config } from '../../config';
 import Konva from 'konva';

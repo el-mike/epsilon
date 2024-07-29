@@ -1,4 +1,4 @@
-import { GameEvent } from '../common';
+import { GameEvent } from '@common/models';
 
 export type CallbackArgs<T extends Record<string, unknown> = Record<string, unknown>> = T;
 export type SubscriptionCallback = (args?: CallbackArgs) => void;

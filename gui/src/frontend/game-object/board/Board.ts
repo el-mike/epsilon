@@ -1,8 +1,7 @@
-import { BoardSquare } from "./BoardSquare";
 import {
   Square,
-  SquareColor
-} from '../../common';
+} from '@common/models';
+import { BoardSquare } from "./BoardSquare";
 import { GameObject } from "../GameObject";
 import { config } from '../../config';
 import { StageManager } from '../../core';

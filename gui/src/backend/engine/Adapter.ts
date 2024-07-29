@@ -7,11 +7,11 @@ import {
 } from 'ffi-napi';
 
 import { Type } from 'ref-napi';
-import { EngineBoardState } from '../common/models/engine';
 import {
+  EngineBoardState,
   PieceColor,
   PieceKind,
-} from '../common';
+} from '@common/models';
 
 export type EngineLibDefinition = {
   evaluate: [Type<string>, [], LibraryFunctionOptions],

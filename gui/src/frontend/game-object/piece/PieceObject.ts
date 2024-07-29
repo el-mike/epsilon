@@ -1,5 +1,5 @@
 import Konva from 'konva';
-import { PieceColor } from "../../common";
+import { PieceColor } from '@common/models';
 import { GameObject } from "../GameObject";
 import { StageManager } from "../../core";
 import { config } from '../../config';

@@ -1,3 +1,4 @@
+const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
@@ -12,6 +13,12 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.ts', '.jsx', '.tsx', '.css', '.json'],
+    alias: {
+      '@assets': path.resolve(__dirname, "src/assets"),
+      '@common': path.resolve(__dirname, "src/common"),
+      '@backend': path.resolve(__dirname, "src/backend"),
+      '@frontend': path.resolve(__dirname, "src/frontend"),
+    }
   },
   externals: [nodeExternals()]
 };

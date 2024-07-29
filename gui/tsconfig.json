@@ -12,7 +12,11 @@
     "resolveJsonModule": true,
     "target": "ES6",
     "paths": {
-      "*": ["node_modules/*"]
+      "*": ["node_modules/*"],
+      "@assets/*": ["src/assets/*"],
+      "@common/*": ["src/common/*"],
+      "@backend/*": ["src/backend/*"],
+      "@frontend/*": ["src/frontend/*"]
     }
   },
   "include": ["src/**/*"]

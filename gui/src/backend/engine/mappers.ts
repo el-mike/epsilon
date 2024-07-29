@@ -1,11 +1,11 @@
-import { EngineBoardState } from '../common/models/engine';
 import {
   Piece,
   PIECE_COLORS,
   PIECE_KINDS,
   Square,
-  SquareColor
-} from '../common';
+  SquareColor,
+  EngineBoardState
+} from '@common/models';
 
 export const mapBitboardsToSquares = (engineBoardState: EngineBoardState): Square[] => {
   const squares: Square[] = [];

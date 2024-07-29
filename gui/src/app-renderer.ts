@@ -28,7 +28,7 @@
 
 import './index.css';
 
-import { Game } from './game';
+import { Game } from './frontend/game';
 
 const game = new Game();
 
