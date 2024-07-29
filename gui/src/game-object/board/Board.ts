@@ -23,7 +23,7 @@ export class Board extends GameObject {
   public init() {
     for (let i = 0; i < this._squares.length; i += 1) {
       const square = this._squares[i];
-      const rank = Math.floor(i / config.board.size);
+      const rank = 7 - Math.floor(i / config.board.size);
       const file = i % config.board.size;
 
       const boardSquare = new BoardSquare(square.color, rank ,file);
