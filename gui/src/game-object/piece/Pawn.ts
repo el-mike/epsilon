@@ -1,8 +1,8 @@
-import { Piece } from '../piece';
+import { PieceObject } from '../piece';
 import { PieceColor } from '../../common';
 import { Texture } from '../../texture/texture.enum';
 
-export class Pawn extends Piece {
+export class Pawn extends PieceObject {
   public constructor(color: PieceColor, x: number, y: number) {
     super(color, x, y);
   }

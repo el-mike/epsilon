@@ -5,7 +5,7 @@ import { StageManager } from "../../core";
 import { config } from '../../config';
 import { TextureService } from '../../texture/TextureService';
 
-export abstract class Piece extends GameObject {
+export abstract class PieceObject extends GameObject {
   protected _textureService = TextureService.getInstance();
 
   protected _image: Konva.Image;

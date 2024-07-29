@@ -1,1 +1,1 @@
-export type Bitboard = number;
+export type Bitboard = bigint;

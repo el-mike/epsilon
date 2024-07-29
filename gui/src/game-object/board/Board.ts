@@ -1,5 +1,8 @@
 import { BoardSquare } from "./BoardSquare";
-import { BoardSquareColor } from "../../common";
+import {
+  Square,
+  SquareColor
+} from '../../common';
 import { GameObject } from "../GameObject";
 import { config } from '../../config';
 import { StageManager } from '../../core';
@@ -11,28 +14,24 @@ export type IterateFn = (
 ) => void;
 
 export class Board extends GameObject {
-  private _squares: BoardSquare[][];
+  private _boardSquares: BoardSquare[] = [];
 
-  public constructor() {
+  public constructor(private _squares: Square[]) {
     super();
   }
 
   public init() {
-    this._squares = [[], [], [], [], [], [], [], []];
+    for (let i = 0; i < this._squares.length; i += 1) {
+      const square = this._squares[i];
+      const rank = Math.floor(i / config.board.size);
+      const file = i % config.board.size;
 
-    this.iterate((_, rank, file) => {
-      const isDarkSquare = (rank + file) % 2 !== 0;
+      const boardSquare = new BoardSquare(square.color, rank ,file);
 
-      const square = new BoardSquare(
-        isDarkSquare ? BoardSquareColor.Dark : BoardSquareColor.Light,
-        rank,
-        file,
-      );
+      boardSquare.init(square.piece);
 
-      square.init();
-
-      this._squares[rank][file] = square;
-    });
+      this._boardSquares.push(boardSquare);
+    }
   }
 
   public render(stageManager: StageManager) {
@@ -44,10 +43,11 @@ export class Board extends GameObject {
   }
 
   public iterate(callback: IterateFn) {
-    for (let rank = 0; rank < config.board.size; rank += 1) {
-      for (let file = 0; file < config.board.size; file += 1) {
-        callback(this._squares[rank][file], rank, file);
-      }
+    for (let i = 0; i < this._boardSquares.length; i += 1) {
+      const rank = Math.floor(i / config.board.size);
+      const file = i % config.board.size;
+
+      callback(this._boardSquares[i], rank, file);
     }
   }
 

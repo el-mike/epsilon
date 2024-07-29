@@ -7,11 +7,15 @@ import {
 } from 'ffi-napi';
 
 import { Type } from 'ref-napi';
+import { EngineBoardState } from '../common/models/engine';
+import {
+  PieceColor,
+  PieceKind,
+} from '../common';
 
 export type EngineLibDefinition = {
   evaluate: [Type<string>, [], LibraryFunctionOptions],
   get_available_moves: [Type<string>, [], LibraryFunctionOptions],
-  factorial: [Type<number | string>, [], LibraryFunctionOptions];
 };
 
 export class EngineAdapter {
@@ -28,8 +32,7 @@ export class EngineAdapter {
   public constructor() {
     this._lib = Library(this._libPath, {
       'evaluate': ['string', []],
-      'get_available_moves': ['char *', []],
-      'factorial': ['uint64', []]
+      'get_available_moves': ['char *', []]
     });
   }
 
@@ -44,5 +47,20 @@ export class EngineAdapter {
     const moves = movesBuf.readCString();
 
     return moves;
+  }
+
+  /**
+   * @TODO:
+   * FFI integration.
+   */
+  public getBoardState() {
+    return {
+      [PieceColor.White]: {
+        [PieceKind.Pawn]: BigInt(0x000000000000FFFF),
+      },
+      [PieceColor.Black]: {
+        [PieceKind.Pawn]: BigInt(0x00FF000000000000)
+      },
+    } as EngineBoardState;
   }
 }

@@ -1,10 +1,17 @@
 import {
-  Piece,
+  Bishop,
+  King,
+  Knight,
+  Pawn,
+  PieceObject,
+  Queen,
   Rook
 } from '../piece';
 import {
-  BoardSquareColor,
-  PieceColor
+  Piece,
+  PieceColor,
+  PieceKind,
+  SquareColor
 } from '../../common/models';
 import { GameObject } from '../GameObject';
 import { config } from '../../config';
@@ -15,10 +22,10 @@ export class BoardSquare extends GameObject {
   private _rect: Konva.Rect;
 
   public constructor(
-    private _color: BoardSquareColor,
+    private _color: SquareColor,
     private _rank: number,
     private _file: number,
-    private _piece: Piece | null = null,
+    private _piece: PieceObject | null = null,
   ) {
     super();
   }
@@ -27,7 +34,7 @@ export class BoardSquare extends GameObject {
     this._rect.destroy();
   }
 
-  public init() {
+  public init(piece?: Piece) {
     const squareWidth = config.board.width / config.board.size;
     const squareHeight = config.board.height / config.board.size;
 
@@ -45,9 +52,31 @@ export class BoardSquare extends GameObject {
     });
 
 
-    if (this._rank < 2 || this._rank > 5) {
-      this._piece = new Rook(PieceColor.Black, x, y);
+    if (piece) {
+      let pieceObject;
 
+      switch (piece.kind) {
+        case PieceKind.Pawn:
+          pieceObject = new Pawn(piece.color, x, y);
+          break;
+        case PieceKind.Knight:
+          pieceObject = new Knight(piece.color, x, y);
+          break;
+        case PieceKind.Bishop:
+          pieceObject = new Bishop(piece.color, x, y);
+          break;
+        case PieceKind.Rook:
+          pieceObject = new Rook(piece.color, x, y);
+          break;
+        case PieceKind.Queen:
+          pieceObject = new Queen(piece.color, x, y);
+          break;
+        case PieceKind.King:
+          pieceObject = new King(piece.color, x, y);
+          break;
+      }
+
+      this._piece = pieceObject;
       this._piece.init();
     }
   }
@@ -74,15 +103,15 @@ export class BoardSquare extends GameObject {
     return this._file;
   }
 
-  public setPiece(piece: Piece) {
+  public setPiece(piece: PieceObject) {
     this._piece = piece;
   }
 
   public isDark() {
-    return this._color === BoardSquareColor.Dark;
+    return this._color === SquareColor.Dark;
   }
 
   public isLight() {
-    return this._color === BoardSquareColor.Light;
+    return this._color === SquareColor.Light;
   }
 }
