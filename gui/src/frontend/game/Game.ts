@@ -1,6 +1,7 @@
 import {
   EventBus,
   StageManager,
+  StateManager,
 } from '../core';
 import { Board } from '../game-object';
 import { TextureService } from '../texture/TextureService';
@@ -10,20 +11,17 @@ import {
 } from '@common/models';
 
 export class Game {
+  private _stateManager = StateManager.getInstance();
   private _texturesService: TextureService = TextureService.getInstance();
   private _stageManager: StageManager = new StageManager();
   private _eventBus: EventBus = EventBus.getInstance();
 
   public async start() {
-    await this._preload();
-
     this._eventBus.register(GameEvent.STATE_UPDATED, (args: { state: GameState }) => this._render(args.state));
 
-    const gameState = (await window.electronAPI?.getCurrentState()).result;
-
-    this._render(gameState);
+    await this._preload();
+    await this._stateManager.init();
   }
-
 
   private async _preload() {
     await this._texturesService.load();

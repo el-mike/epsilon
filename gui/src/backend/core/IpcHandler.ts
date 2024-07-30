@@ -1,4 +1,7 @@
-import { ipcMain } from 'electron';
+import {
+  BrowserWindow,
+  ipcMain
+} from 'electron';
 import { IpcEvent } from '@common/models/ipc-event';
 import {
   EngineBoardState,
@@ -10,6 +13,8 @@ import {
 import { mapBitboardsToSquares } from '@backend/engine';
 
 export class IpcHandler {
+  public constructor(private _mainWindow: BrowserWindow) {}
+
   public listen() {
     ipcMain.handle(IpcEvent.GetCurrentState, async () => {
       const engineBoardState = {
@@ -39,6 +44,10 @@ export class IpcHandler {
     ipcMain.handle(IpcEvent.MakeMove, async () => {
       return this.createIpcMessage('works', null);
     });
+  }
+
+  public send(event: IpcEvent, payload: unknown) {
+    this._mainWindow.webContents.send(event, payload);
   }
 
   private createIpcMessage = <TResult = unknown, TError = unknown>(result: TResult, error: TError) => {

@@ -36,7 +36,7 @@ const createWindow = (): void => {
   const evaluation = engineAdapter.evaluate();
   const availableMoves = engineAdapter.getAvailableMoves();
 
-  const ipcHandler = new IpcHandler();
+  const ipcHandler = new IpcHandler(mainWindow);
 
   ipcHandler.listen();
 };

@@ -20,11 +20,26 @@ export class StateManager {
     return StateManager._instance;
   }
 
-  public init(gameState: GameState) {
-    this._gameState = gameState;
+  public async init() {
+    window.backendAPI.onNewState(payload => this.update(payload.state));
+
+    this.update(await this.getCurrentState());
   }
 
-  public update() {
+  public update(newGameState: GameState) {
+    this._gameState = newGameState;
     this._eventBus.dispatch(GameEvent.STATE_UPDATED, { state: this._gameState });
+  }
+
+  public async getCurrentState() {
+    const gameState = (await window.backendAPI.getCurrentState()).result;
+
+    return gameState;
+  }
+
+  public async makeMove() {
+    const result = (await window.backendAPI.makeMove({})).result;
+
+    return result;
   }
 }
