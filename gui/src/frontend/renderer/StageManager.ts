@@ -33,4 +33,10 @@ export class StageManager {
   public draw() {
     this._mainStage.draw();
   }
+
+  public clear() {
+    this._mainLayer.removeChildren();
+    this._pieceLayer.removeChildren();
+    this._dragLayer.removeChildren();
+  }
 }

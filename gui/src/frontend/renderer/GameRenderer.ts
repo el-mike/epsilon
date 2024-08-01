@@ -15,6 +15,8 @@ export class GameRenderer extends Renderer<GameState> {
   }
 
   public render(gameState: GameState) {
+    this._stageManager.clear();
+
     this._boardRenderer.render(gameState.boardState);
 
     this._stageManager.draw();
