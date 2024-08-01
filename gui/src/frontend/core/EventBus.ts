@@ -1,11 +1,9 @@
-import { GameEvent } from '@common/models';
-
 export type CallbackArgs<T extends Record<string, unknown> = Record<string, unknown>> = T;
 export type SubscriptionCallback = (args?: CallbackArgs) => void;
 
 
 export type Registry = {
-  [key in GameEvent]?: SubscriptionCallback[];
+  [key: string]: SubscriptionCallback[];
 };
 
 export class EventBus {
@@ -23,11 +21,11 @@ export class EventBus {
     return EventBus._instance;
   }
 
-  public dispatch<T extends CallbackArgs = CallbackArgs>(event: GameEvent, args?: T) {
+  public dispatch<T extends CallbackArgs = CallbackArgs>(event: string, args?: T) {
     this._registry?.[event]?.forEach(cb => cb(args));
   }
 
-  public register(event: GameEvent, callback: SubscriptionCallback) {
+  public register(event: string, callback: SubscriptionCallback) {
     if (!this._registry[event]) {
       this._registry[event] = [];
     }

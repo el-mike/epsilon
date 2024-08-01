@@ -5,18 +5,21 @@ import {
 import { IpcEvent } from '@common/models/ipc-event';
 import {
   EngineBoardState,
-  GameState,
+  EngineState,
   IpcMessage,
   PieceColor,
   PieceKind
 } from '@common/models';
-import { mapBitboardsToSquares } from '@backend/engine';
 
 export class IpcHandler {
   public constructor(private _mainWindow: BrowserWindow) {}
 
   public listen() {
-    ipcMain.handle(IpcEvent.GetCurrentState, async () => {
+    /**
+     * @TODO:
+     * Replace with FFI integration.
+     */
+    ipcMain.handle(IpcEvent.GetCurrentEngineState, async () => {
       const engineBoardState = {
         [PieceColor.White]: {
           [PieceKind.Pawn]: BigInt(0x000000000000FF00),
@@ -36,9 +39,9 @@ export class IpcHandler {
         },
       } as EngineBoardState;
 
-      return this.createIpcMessage({
-        squares: mapBitboardsToSquares(engineBoardState),
-      } as GameState, null);
+      return this.createIpcMessage<EngineState>({
+        boardState: engineBoardState,
+      }, null);
     });
 
     ipcMain.handle(IpcEvent.MakeMove, async () => {

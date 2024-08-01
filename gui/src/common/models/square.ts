@@ -1,11 +1,13 @@
-import { Piece } from './piece';
-
 export enum SquareColor {
   Light,
   Dark,
 }
 
-export enum SquareCoord {
+export const getSquareCoordIndices = () => Object.keys(Square).filter(key => !isNaN(Number(key))).map(index => parseInt(index));
+
+
+
+export enum Square {
   A1 = 0,
   B1,
   C1,
@@ -71,10 +73,3 @@ export enum SquareCoord {
   G8,
   H8,
 }
-
-export type Square = {
-  color: SquareColor;
-  piece?: Piece;
-};
-
-export const getSquareCoordIndices = () => Object.keys(SquareCoord).filter(key => !isNaN(Number(key))).map(index => parseInt(index));

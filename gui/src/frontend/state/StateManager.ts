@@ -1,8 +1,6 @@
-import {
-  GameEvent,
-  GameState
-} from '@common/models';
-import { EventBus } from './EventBus';
+import { EventBus } from '../core/EventBus';
+import { GameState } from './GameState';
+import { StateEvent } from '@frontend/state/events';
 
 export class StateManager {
   private static _instance: StateManager;
@@ -21,20 +19,20 @@ export class StateManager {
   }
 
   public async init() {
-    window.backendAPI.onNewState(payload => this.update(payload.state));
+    window.backendAPI.onNewState(payload => this.update(GameState.fromEngineState(payload.result.state)));
 
     this.update(await this.getCurrentState());
   }
 
   public update(newGameState: GameState) {
     this._gameState = newGameState;
-    this._eventBus.dispatch(GameEvent.STATE_UPDATED, { state: this._gameState });
+    this._eventBus.dispatch(StateEvent.STATE_UPDATED, { state: this._gameState });
   }
 
   public async getCurrentState() {
-    const gameState = (await window.backendAPI.getCurrentState()).result;
+    const engineGameState = (await window.backendAPI.getCurrentState()).result;
 
-    return gameState;
+    return GameState.fromEngineState(engineGameState);
   }
 
   public async makeMove() {

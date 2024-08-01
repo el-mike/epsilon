@@ -5,30 +5,30 @@ import { contextBridge, ipcRenderer } from 'electron';
 import {
   IpcEvent,
   MakeMovePayload,
-  NewStatePayload,
+  NewEngineStatePayload,
 } from '@common/models/ipc-event';
 import {
-  GameState,
+  EngineState,
   IpcMessage
 } from '@common/models';
 
 declare global {
   interface Window {
     backendAPI: {
-      onNewState: (callback: (payload: NewStatePayload) => void) => void,
-      getCurrentState: () => IpcMessage<GameState>,
+      onNewState: (callback: (payload: IpcMessage<NewEngineStatePayload>) => void) => void,
+      getCurrentState: () => IpcMessage<EngineState>,
       makeMove: (args: MakeMovePayload) => IpcMessage<string>
     };
   }
 }
 
 contextBridge.exposeInMainWorld('backendAPI', {
-  onNewState: (callback: (payload: NewStatePayload) => void) => {
-    ipcRenderer.on(IpcEvent.NewState, (_, value: NewStatePayload) => callback(value))
+  onNewState: (callback: (payload: IpcMessage<NewEngineStatePayload>) => void) => {
+    ipcRenderer.on(IpcEvent.NewEngineState, (_, value: IpcMessage<NewEngineStatePayload>) => callback(value))
   },
 
   getCurrentState: async () => {
-    const result = await ipcRenderer.invoke(IpcEvent.GetCurrentState) as IpcMessage<GameState>;
+    const result = await ipcRenderer.invoke(IpcEvent.GetCurrentEngineState) as IpcMessage<EngineState>;
 
     return result;
   },

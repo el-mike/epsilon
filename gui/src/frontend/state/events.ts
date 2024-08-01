@@ -1,6 +1,6 @@
-import { GameState } from './game-state';
+import { GameState } from '@frontend/state/GameState';
 
-export enum GameEvent {
+export enum StateEvent {
   STATE_UPDATED = 'state-updated'
 }
 

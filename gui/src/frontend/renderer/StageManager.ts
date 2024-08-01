@@ -1,5 +1,5 @@
 import Konva from "konva";
-import { config } from "@frontend/config";
+import { config } from "@common/config";
 
 export class StageManager {
   private _mainStage = new Konva.Stage({
