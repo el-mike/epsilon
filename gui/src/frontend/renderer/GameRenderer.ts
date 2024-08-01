@@ -7,7 +7,7 @@ export class GameRenderer extends Renderer<GameState> {
   private _boardRenderer: BoardRenderer;
 
   public constructor() {
-    const stageManager = new StageManager()
+    const stageManager = new StageManager();
 
     super(stageManager);
 

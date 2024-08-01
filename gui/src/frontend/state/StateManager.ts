@@ -29,6 +29,10 @@ export class StateManager {
     this._eventBus.dispatch(StateEvent.STATE_UPDATED, { state: this._gameState });
   }
 
+  public triggerUpdateEvent() {
+    this._eventBus.dispatch(StateEvent.STATE_UPDATED, { state: this._gameState });
+  }
+
   public async getCurrentState() {
     const engineGameState = (await window.backendAPI.getCurrentState()).result;
 

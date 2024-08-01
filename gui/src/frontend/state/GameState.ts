@@ -9,19 +9,24 @@ import {
 } from '@common/models';
 
 import { config } from '@common/config';
+import { StateObject } from '@frontend/state/StateObject';
 
-export class PieceState {
-  public constructor(public color: PieceColor, public kind: PieceKind) {}
+export class PieceState extends StateObject{
+  public constructor(public color: PieceColor, public kind: PieceKind) {
+    super();
+  }
 
   public get isWhite() {
     return this.color === PieceColor.White;
   }
 }
 
-export class SquareState {
-  selected?: boolean;
+export class SquareState extends StateObject{
+  public selected = false;
 
-  public constructor(public square: Square, public color: SquareColor, public piece?: PieceState) {}
+  public constructor(public square: Square, public color: SquareColor, public piece?: PieceState) {
+    super();
+  }
 
   public get rank() {
     return Math.floor(this.square / config.board.size);
@@ -34,14 +39,23 @@ export class SquareState {
   public get isLight() {
     return this.color === SquareColor.Light;
   }
+
+  public toggleSelection() {
+    this.selected = !this.selected;
+    this._stateManager.triggerUpdateEvent();
+  }
 }
 
-export class BoardState {
-  public constructor(public squares: SquareState[]) {}
+export class BoardState extends StateObject{
+  public constructor(public squares: SquareState[]) {
+    super();
+  }
 }
 
-export class GameState {
-  public constructor(public boardState: BoardState) {}
+export class GameState extends StateObject {
+  public constructor(public boardState: BoardState) {
+    super();
+  }
 
   public static fromEngineState(engineState: EngineState): GameState {
     const squares: SquareState[] = [];

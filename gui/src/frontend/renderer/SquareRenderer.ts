@@ -37,15 +37,21 @@ export class SquareRenderer extends Renderer<SquareState> {
      */
     const y = ((config.board.size - 1) - squareState.rank) * squareHeight;
 
+    const fill = squareState.selected
+      ? '#ff0000'
+      : squareState.isLight
+        ? config.board.lightSquareColor
+        : config.board.darkSquareColor;
+
     const rect = new Konva.Rect({
       x,
       y,
       width: squareWidth,
       height: squareHeight,
-      fill: squareState.isLight
-        ? config.board.lightSquareColor
-        : config.board.darkSquareColor
+      fill,
     });
+
+    rect.on('click', () => squareState.toggleSelection());
 
     if (squareState.piece) {
       this._renderPiece(squareState.piece, x, y);
